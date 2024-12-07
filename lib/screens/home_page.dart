@@ -39,15 +39,6 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
       body: Column(
         children: [
           Expanded(child: _pages[_selectedIndex]),
-          Container(
-            color: Colors.blue[100],
-            padding: const EdgeInsets.all(8.0),
-            child: const Text(
-              'Explore the world with TravelMate!',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-          ),
         ],
       ),
       bottomNavigationBar: CustomNavigationBar(
