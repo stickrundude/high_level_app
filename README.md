@@ -1,23 +1,16 @@
-# TravelMate
+# high_level_application
 
-TravelMate is a simple Flutter app designed for managing travel-related tasks.
-## Features
+A new Flutter project.
 
-- **Login Page**
-- **Home Page**
-- **Camera Page**
-- **Notes Page**
-- **Settings Page**
+## Getting Started
 
-## Installation
+This project is a starting point for a Flutter application.
 
-### Prerequisites
+A few resources to get you started if this is your first Flutter project:
 
-Ensure you have the following installed on your system:
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-- Flutter (version 3.x or above)
-- Dart
-- An emulator or physical device for testing
-
-### Steps to Run the App
-
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
