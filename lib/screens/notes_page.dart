@@ -56,8 +56,8 @@ class _NotesPageState extends State<NotesPage> {
               ),
             ),
             const SizedBox(height: 16),
-            Center(
-              child: const Text(
+            const Center(
+              child: Text(
                 'Notes List',
                 style: TextStyle(
                   fontSize: 20,
