@@ -4,7 +4,7 @@
             "outputFile": "com.example.high_level_application.app-mergeDebugResources-24:/values-eu/values-eu.xml",
             "map": [
                 {
-                    "source": "/Users/kshitij/.gradle/caches/transforms-3/28ee8a5ebc96d117de5598ee6fce01ba/transformed/core-1.13.1/res/values-eu/values-eu.xml",
+                    "source": "C:\\Users\\crist\\.gradle\\caches\\transforms-3\\28ee8a5ebc96d117de5598ee6fce01ba\\transformed\\core-1.13.1\\res\\values-eu\\values-eu.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'settings_page.dart';
 import 'map_page.dart';
@@ -15,6 +16,8 @@ class TravelMateHomePage extends StatefulWidget {
 class _TravelMateHomePageState extends State<TravelMateHomePage> {
   int _selectedIndex = 0;
 
+  double soundVolume = 1.0;
+
   static const List<Widget> _pages = <Widget>[
     MapPage(),
     CameraPage(),
@@ -25,6 +28,18 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void playWelcomeSound() {
+    FlameAudio.play('welcome.mp3', volume: soundVolume);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      playWelcomeSound();
     });
   }
 
