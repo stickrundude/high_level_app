@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'home_page.dart';
 import 'signup_page.dart';
+import 'dart:core';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
+  bool isValidEmail(String email) {
+    final RegExp emailRegex =
+        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    return emailRegex.hasMatch(email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +20,28 @@ class LoginPage extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
 
     Future<void> loginUser(BuildContext context) async {
-      try {
-        final String email = emailController.text.trim();
-        final String password = passwordController.text.trim();
+      final String email = emailController.text.trim();
+      final String password = passwordController.text.trim();
 
+      if (email.isEmpty || password.isEmpty) {
+        Fluttertoast.showToast(
+          msg: "Please fill in both email and password!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        Fluttertoast.showToast(
+          msg: "Invalid email format. Please enter a valid email.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+        return;
+      }
+
+      try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -28,8 +54,10 @@ class LoginPage extends StatelessWidget {
           ),
         );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed: $e')),
+        Fluttertoast.showToast(
+          msg: "Invalid credentials. Please try again.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
         );
       }
     }

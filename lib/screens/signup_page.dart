@@ -60,8 +60,7 @@ class SignUpPage extends StatelessWidget {
           return;
         }
 
-        final UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );

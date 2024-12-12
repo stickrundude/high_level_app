@@ -64,3 +64,4 @@ GoogleService-Info.plist
 # Ignore Flutter plugin files
 .flutter-plugins
 .flutter-plugins-dependencies
+.dart_tool/package_config.json

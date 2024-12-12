@@ -3,7 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services" 
-
+}
 android {
     namespace = "com.example.high_level_application"
     compileSdk = flutter.compileSdkVersion
