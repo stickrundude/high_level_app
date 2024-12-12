@@ -60,3 +60,7 @@ GoogleService-Info.plist
 
 # Local Configuration
 .env
+
+# Ignore Flutter plugin files
+.flutter-plugins
+.flutter-plugins-dependencies
