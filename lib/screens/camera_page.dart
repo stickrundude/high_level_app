@@ -20,23 +20,31 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
-    _initializeCamera();
+    _initializeControllerFuture = _initializeCamera();
   }
 
   Future<void> _initializeCamera() async {
-    _cameras = await availableCameras();
-    _selectedCameraIndex = 0;
-    await _setupCamera(_cameras[_selectedCameraIndex]);
+    try {
+      _cameras = await availableCameras();
+      _selectedCameraIndex = 0;
+      await _setupCamera(_cameras[_selectedCameraIndex]);
+    } catch (e) {
+      print("Error initializing camera: $e");
+    }
   }
 
   Future<void> _setupCamera(CameraDescription camera) async {
-    _controller = CameraController(
-      camera,
-      ResolutionPreset.medium,
-    );
-    _initializeControllerFuture = _controller.initialize();
-    if (mounted) {
-      setState(() {});
+    try {
+      _controller = CameraController(
+        camera,
+        ResolutionPreset.medium,
+      );
+      await _controller.initialize();
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      print("Error setting up camera: $e");
     }
   }
 
