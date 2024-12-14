@@ -3,9 +3,32 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'home_page.dart';
 import 'signup_page.dart';
 import '/services/login_services.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  AudioPlayer audioPlayer = AudioPlayer();
+  String welcomeAudioPath = 'audio/welcome.mp3';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      playWelcomeAudio();
+    });
+  }
+
+  void playWelcomeAudio() {
+      audioPlayer.play(AssetSource(welcomeAudioPath));
+      print("Audio played");
+    }
 
   @override
   Widget build(BuildContext context) {
