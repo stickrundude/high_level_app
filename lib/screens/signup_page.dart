@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '/services/signup_services.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -29,58 +28,47 @@ class SignUpPage extends StatelessWidget {
       return password.length >= 6 && passwordRegex.hasMatch(password);
     }
 
-    Future<void> signUpUser(BuildContext context) async {
-      try {
-        final String email = emailController.text.trim();
-        final String password = passwordController.text.trim();
-        final String firstName = firstNameController.text.trim();
-        final String lastName = lastNameController.text.trim();
+    Future<void> signUp(BuildContext context) async {
+      final signUpService = SignUpService();
 
-        if (!isValidName(firstName)) {
-          Fluttertoast.showToast(
-              msg: "First Name must only contain letters and cannot be empty.");
-          return;
-        }
+      final String email = emailController.text.trim();
+      final String password = passwordController.text.trim();
+      final String firstName = firstNameController.text.trim();
+      final String lastName = lastNameController.text.trim();
 
-        if (!isValidName(lastName)) {
-          Fluttertoast.showToast(
-              msg: "Last Name must only contain letters and cannot be empty.");
-          return;
-        }
+      if (!isValidName(firstName)) {
+        Fluttertoast.showToast(
+            msg: "First Name must only contain letters and cannot be empty.");
+        return;
+      }
 
-        if (!isValidEmail(email)) {
-          Fluttertoast.showToast(msg: "Please enter a valid email.");
-          return;
-        }
+      if (!isValidName(lastName)) {
+        Fluttertoast.showToast(
+            msg: "Last Name must only contain letters and cannot be empty.");
+        return;
+      }
 
-        if (!isValidPassword(password)) {
-          Fluttertoast.showToast(
-              msg:
-                  "Password should be at least 6 characters and contain both letters and numbers.");
-          return;
-        }
+      if (!isValidEmail(email)) {
+        Fluttertoast.showToast(msg: "Please enter a valid email.");
+        return;
+      }
 
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+      if (!isValidPassword(password)) {
+        Fluttertoast.showToast(
+            msg:
+                "Password should be at least 6 characters and contain both letters and numbers.");
+        return;
+      }
 
-        final user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .set({
-            'firstName': firstName,
-            'lastName': lastName,
-            'email': email,
-          });
-        }
+      bool isSuccess = await signUpService.signUpUser(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
 
-        Fluttertoast.showToast(msg: "Sign-up successful!");
+      if (isSuccess) {
         Navigator.pop(context);
-      } catch (e) {
-        Fluttertoast.showToast(msg: "Sign-up failed: $e");
       }
     }
 
@@ -129,7 +117,7 @@ class SignUpPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => signUpUser(context),
+              onPressed: () => signUp(context),
               child: const Text('Sign Up'),
             ),
           ],

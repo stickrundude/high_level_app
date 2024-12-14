@@ -10,10 +10,6 @@ class SettingsPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Settings Page',
-            style: TextStyle(fontSize: 24),
-          ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {

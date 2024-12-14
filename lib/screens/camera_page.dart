@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'dart:typed_data';
-import 'dart:io';
+import '/widgets/camera_preview.dart';
+import '/widgets/camera_controls.dart';
+import '/services/camera_services.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -12,111 +11,116 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
-  late List<CameraDescription> _cameras;
-  int _selectedCameraIndex = 0;
+  late CameraService _cameraService;
+  bool _isGalleryImageSelected = false;
+  String? _selectedImagePath;
+  bool _isCaptureFirstPress = true;
 
   @override
   void initState() {
     super.initState();
-    _initializeControllerFuture = _initializeCamera();
+    _cameraService = CameraService();
+    _initializeCamera();
   }
 
   Future<void> _initializeCamera() async {
-    try {
-      _cameras = await availableCameras();
-      _selectedCameraIndex = 0;
-      await _setupCamera(_cameras[_selectedCameraIndex]);
-    } catch (e) {
-      print("Error initializing camera: $e");
-    }
-  }
-
-  Future<void> _setupCamera(CameraDescription camera) async {
-    try {
-      _controller = CameraController(
-        camera,
-        ResolutionPreset.medium,
-      );
-      await _controller.initialize();
-      if (mounted) {
-        setState(() {});
-      }
-    } catch (e) {
-      print("Error setting up camera: $e");
-    }
+    await _cameraService.initializeCamera();
+    setState(() {});
   }
 
   Future<void> _switchCamera() async {
-    _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras.length;
-    await _setupCamera(_cameras[_selectedCameraIndex]);
+    await _cameraService.switchCamera();
+    setState(() {});
   }
 
   Future<void> _captureAndSavePicture() async {
-    try {
-      await _initializeControllerFuture;
+    if (_isGalleryImageSelected) {
+      setState(() {
+        _isGalleryImageSelected = false;
+      });
+    } else {
+      String? imagePath = await _cameraService.captureAndSavePicture();
+      if (imagePath != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Picture saved to gallery!')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to save picture.')),
+        );
+      }
+      setState(() {
+        _isCaptureFirstPress = true;
+      });
+    }
+  }
 
-      final XFile picture = await _controller.takePicture();
-
-      final Uint8List bytes = await File(picture.path).readAsBytes();
-
-      final result = await ImageGallerySaver.saveImage(
-        bytes,
-        quality: 80,
-        name: "captured_image_${DateTime.now().millisecondsSinceEpoch}",
-      );
-
-      print("Saved to gallery: $result");
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Picture saved to gallery!')),
-      );
-    } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+  Future<void> _pickImageFromGallery() async {
+    String? pickedFilePath = await _cameraService.pickImageFromGallery();
+    if (pickedFilePath != null) {
+      setState(() {
+        _isGalleryImageSelected = true;
+        _selectedImagePath = pickedFilePath;
+      });
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _cameraService.controller?.dispose();
     super.dispose();
+  }
+
+  Widget _buildCameraSwitcher() {
+    return Positioned(
+      top: 80,
+      right: 35,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 75, 177, 246).withOpacity(0.5),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.all(1.0),
+        child: IconButton(
+          onPressed: _switchCamera,
+          icon: const Icon(Icons.flip_camera_android),
+          color: Colors.white,
+          iconSize: 30,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Camera')),
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Stack(
+      body: _cameraService.controller?.value.isInitialized == true
+          ? Column(
               children: [
-                CameraPreview(_controller),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  child: FloatingActionButton(
-                    heroTag: "switchCamera",
-                    onPressed: _switchCamera,
-                    child: const Icon(Icons.flip_camera_android),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      CameraPreviewWidget(
+                        isGalleryImageSelected: _isGalleryImageSelected,
+                        selectedImagePath: _selectedImagePath,
+                        controller: _cameraService.controller!,
+                        containerWidth: MediaQuery.of(context).size.width * 0.9,
+                        containerHeight:
+                            MediaQuery.of(context).size.height * 0.6,
+                      ),
+                      if (!_isGalleryImageSelected) _buildCameraSwitcher(),
+                    ],
                   ),
                 ),
+                CameraControls(
+                  onCapturePressed: _captureAndSavePicture,
+                  onGalleryPressed: _pickImageFromGallery,
+                  isCaptureActive: !_isGalleryImageSelected,
+                  isGalleryActive: _isGalleryImageSelected,
+                ),
               ],
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _captureAndSavePicture,
-        child: const Icon(Icons.camera),
-      ),
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

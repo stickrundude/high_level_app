@@ -9,8 +9,8 @@ class MapPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Map'),
       ),
-      body: Center(
-        child: const Text('This is the Map Page'),
+      body: const Center(
+        child: Text('This is the Map Page'),
       ),
     );
   }

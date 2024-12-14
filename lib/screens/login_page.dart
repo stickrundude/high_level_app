@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'home_page.dart';
 import 'signup_page.dart';
-import 'dart:core';
+import '/services/login_services.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  bool isValidEmail(String email) {
-    final RegExp emailRegex =
-        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-    return emailRegex.hasMatch(email);
-  }
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final LoginService loginService = LoginService();
 
     Future<void> loginUser(BuildContext context) async {
       final String email = emailController.text.trim();
       final String password = passwordController.text.trim();
+
+      if (!loginService.isValidEmail(email)) {
+        Fluttertoast.showToast(
+          msg: "Invalid email format. Please enter a valid email.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+        return;
+      }
 
       if (email.isEmpty || password.isEmpty) {
         Fluttertoast.showToast(
@@ -32,32 +35,14 @@ class LoginPage extends StatelessWidget {
         return;
       }
 
-      if (!isValidEmail(email)) {
-        Fluttertoast.showToast(
-          msg: "Invalid email format. Please enter a valid email.",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
-        return;
-      }
-
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-
+      bool isSuccess = await loginService.loginUser(email, password);
+      if (isSuccess) {
+        Fluttertoast.showToast(msg: 'Login Successful');
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => const TravelMateHomePage(),
           ),
-        );
-      } catch (e) {
-        Fluttertoast.showToast(
-          msg: "Invalid credentials. Please try again.",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
         );
       }
     }
@@ -73,7 +58,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TravelMate Login'),
+        title: const Text('Welcome to TravelMate '),
         centerTitle: true,
       ),
       body: Padding(
@@ -99,13 +84,15 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            OutlinedButton(
+            ElevatedButton(
               onPressed: () => loginUser(context),
+              style: Theme.of(context).elevatedButtonTheme.style,
               child: const Text('Login'),
             ),
             const SizedBox(height: 12),
-            OutlinedButton(
+            ElevatedButton(
               onPressed: navigateToSignUp,
+              style: Theme.of(context).elevatedButtonTheme.style,
               child: const Text('Sign Up'),
             ),
           ],

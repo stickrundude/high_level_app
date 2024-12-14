@@ -26,13 +26,16 @@ class _NotesPageState extends State<NotesPage> {
     });
   }
 
+  ElevatedButton _buildAddNoteButton() {
+    return ElevatedButton(
+      onPressed: _addNote,
+      child: const Text('Add Note'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notes'),
-        centerTitle: true,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -49,12 +52,7 @@ class _NotesPageState extends State<NotesPage> {
               onSubmitted: (_) => _addNote(),
             ),
             const SizedBox(height: 16),
-            Center(
-              child: ElevatedButton(
-                onPressed: _addNote,
-                child: const Text('Add Note'),
-              ),
-            ),
+            Center(child: _buildAddNoteButton()),
             const SizedBox(height: 16),
             const Center(
               child: Text(

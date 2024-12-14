@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'screens/login_page.dart';
+import '/screens/login_page.dart';
+import '/theme/app_theme.dart';
+import '/utils/constants.dart';
+import '/services/firebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await FirebaseServices.initializeFirebase();
 
   runApp(const TravelMateApp());
 }
@@ -16,11 +18,8 @@ class TravelMateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TravelMate',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
+      title: appTitle,
+      theme: AppTheme.lightTheme,
       home: const LoginPage(),
     );
   }

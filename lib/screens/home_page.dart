@@ -61,10 +61,10 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-            firstName.isNotEmpty ? "Logged in as $firstName" : "Loading..."),
-        centerTitle: true,
+          firstName.isNotEmpty ? "Logged in as $firstName" : "Loading...",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       body: Column(
         children: [
