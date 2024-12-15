@@ -1,65 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '/services/signup_services.dart';
+import '/utils/validators.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController firstNameController = TextEditingController();
-    final TextEditingController lastNameController = TextEditingController();
+  _SignUpPageState createState() => _SignUpPageState();
+}
 
-    bool isValidName(String name) {
-      final nameRegex = RegExp(r'^[a-zA-Z]+$');
-      return name.isNotEmpty && nameRegex.hasMatch(name);
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+
+  bool isPasswordVisible = false;
+  bool isLoading = false;
+
+  Future<void> signUp(BuildContext context) async {
+    final signUpService = SignUpService();
+
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
+    final String firstName = firstNameController.text.trim();
+    final String lastName = lastNameController.text.trim();
+
+    if (!Validators.isValidName(firstName)) {
+      Fluttertoast.showToast(
+          msg: "First Name must only contain letters and cannot be empty.");
+      return;
     }
 
-    bool isValidEmail(String email) {
-      final emailRegex =
-          RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-      return emailRegex.hasMatch(email);
+    if (!Validators.isValidName(lastName)) {
+      Fluttertoast.showToast(
+          msg: "Last Name must only contain letters and cannot be empty.");
+      return;
     }
 
-    bool isValidPassword(String password) {
-      final passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
-      return password.length >= 6 && passwordRegex.hasMatch(password);
+    if (!Validators.isValidEmail(email)) {
+      Fluttertoast.showToast(msg: "Please enter a valid email.");
+      return;
     }
 
-    Future<void> signUp(BuildContext context) async {
-      final signUpService = SignUpService();
+    if (!Validators.isValidPassword(password)) {
+      Fluttertoast.showToast(
+          msg:
+              "Password should be at least 6 characters and contain both letters and numbers.");
+      return;
+    }
 
-      final String email = emailController.text.trim();
-      final String password = passwordController.text.trim();
-      final String firstName = firstNameController.text.trim();
-      final String lastName = lastNameController.text.trim();
+    setState(() {
+      isLoading = true;
+    });
 
-      if (!isValidName(firstName)) {
-        Fluttertoast.showToast(
-            msg: "First Name must only contain letters and cannot be empty.");
-        return;
-      }
-
-      if (!isValidName(lastName)) {
-        Fluttertoast.showToast(
-            msg: "Last Name must only contain letters and cannot be empty.");
-        return;
-      }
-
-      if (!isValidEmail(email)) {
-        Fluttertoast.showToast(msg: "Please enter a valid email.");
-        return;
-      }
-
-      if (!isValidPassword(password)) {
-        Fluttertoast.showToast(
-            msg:
-                "Password should be at least 6 characters and contain both letters and numbers.");
-        return;
-      }
-
+    try {
       bool isSuccess = await signUpService.signUpUser(
         email: email,
         password: password,
@@ -67,11 +63,25 @@ class SignUpPage extends StatelessWidget {
         lastName: lastName,
       );
 
+      setState(() {
+        isLoading = false;
+      });
+
       if (isSuccess) {
         Navigator.pop(context);
+      } else {
+        Fluttertoast.showToast(msg: "Sign-up failed. Please try again.");
       }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Error during sign-up: $e");
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
@@ -109,17 +119,29 @@ class SignUpPage extends StatelessWidget {
             const SizedBox(height: 16),
             TextField(
               controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
+              obscureText: !isPasswordVisible,
+              decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => signUp(context),
-              child: const Text('Sign Up'),
-            ),
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ElevatedButton(
+                    onPressed: () => signUp(context),
+                    child: const Text('Sign Up'),
+                  ),
           ],
         ),
       ),

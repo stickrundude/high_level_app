@@ -1,18 +1,13 @@
 import '/services/firebase_service.dart';
+import '/utils/validators.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginService {
-  final FirebaseServices firebaseServices = FirebaseServices();
+  final FirebaseServices firebaseServices;
 
-  bool isValidEmail(String email) {
-    final RegExp emailRegex =
-        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-    return emailRegex.hasMatch(email);
-  }
+  LoginService({required this.firebaseServices});
 
   Future<bool> loginUser(String? email, String? password) async {
-    print("Email: $email, Password: $password");
-
     if (email == null ||
         password == null ||
         email.isEmpty ||
@@ -21,19 +16,23 @@ class LoginService {
       return false;
     }
 
-    if (!isValidEmail(email)) {
+    if (!Validators.isValidEmail(email)) {
       Fluttertoast.showToast(msg: "Invalid email format");
       return false;
     }
 
-    final appUser =
-        await firebaseServices.signInWithEmailPassword(email, password);
-
-    if (appUser != null) {
-      return true;
-    } else {
-      Fluttertoast.showToast(
-          msg: "Login failed. Please check your credentials.");
+    try {
+      final appUser =
+          await firebaseServices.signInWithEmailPassword(email, password);
+      if (appUser != null) {
+        return true;
+      } else {
+        Fluttertoast.showToast(
+            msg: "Login failed. Please check your credentials.");
+        return false;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "An error occurred during login: $e");
       return false;
     }
   }

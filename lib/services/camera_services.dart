@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -15,7 +16,7 @@ class CameraService {
       _selectedCameraIndex = 0;
       await _setupCamera(_cameras[_selectedCameraIndex]);
     } catch (e) {
-      print("Error initializing camera: $e");
+      Fluttertoast.showToast(msg: "Error initializing camera: $e");
     }
   }
 
@@ -27,7 +28,7 @@ class CameraService {
       );
       await _controller!.initialize();
     } catch (e) {
-      print("Error setting up camera: $e");
+      Fluttertoast.showToast(msg: "Error setting up camera: $e");
     }
   }
 
@@ -56,7 +57,7 @@ class CameraService {
         return null;
       }
     } catch (e) {
-      print("Error capturing picture: $e");
+      Fluttertoast.showToast(msg: "Error capturing picture: $e");
       return null;
     }
   }

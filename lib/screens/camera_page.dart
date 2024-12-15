@@ -14,7 +14,6 @@ class _CameraPageState extends State<CameraPage> {
   late CameraService _cameraService;
   bool _isGalleryImageSelected = false;
   String? _selectedImagePath;
-  bool _isCaptureFirstPress = true;
 
   @override
   void initState() {
@@ -49,9 +48,7 @@ class _CameraPageState extends State<CameraPage> {
           const SnackBar(content: Text('Failed to save picture.')),
         );
       }
-      setState(() {
-        _isCaptureFirstPress = true;
-      });
+      setState(() {});
     }
   }
 

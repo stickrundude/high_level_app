@@ -28,43 +28,47 @@ class _NotesPageState extends State<NotesPage> {
 
   Future<void> _getCurrentCity() async {
     String? city = await getCurrentCity();
-    setState(() {
-      _cityName = city ?? 'Unknown Location';
-    });
+    if (mounted) {
+      setState(() {
+        _cityName = city ?? 'Unknown Location';
+      });
+    }
   }
 
   Future<void> _loadUserNotes() async {
     var userNotes = await _notesService.getNotes();
-    setState(() {
-      notes = userNotes.map((noteData) {
-        noteData['document'] = quill.Document.fromJson(noteData['document']);
-        return noteData;
-      }).toList();
+    if (mounted) {
+      setState(() {
+        notes = userNotes.map((noteData) {
+          noteData['document'] = quill.Document.fromJson(noteData['document']);
+          return noteData;
+        }).toList();
 
-      notes.sort((a, b) {
-        var aTimestamp = a['createdAt'] ?? DateTime(0);
-        var bTimestamp = b['createdAt'] ?? DateTime(0);
-        return aTimestamp.compareTo(bTimestamp);
+        notes.sort((a, b) {
+          var aTimestamp = a['createdAt'] ?? DateTime(0);
+          var bTimestamp = b['createdAt'] ?? DateTime(0);
+          return aTimestamp.compareTo(bTimestamp);
+        });
       });
-    });
+    }
   }
 
   void _saveNote() async {
     if (_controller.document.isEmpty()) return;
 
     var timestamp = DateTime.now();
+    final newNote = {
+      'city': _cityName ?? 'Unknown Location',
+      'document': _controller.document.toDelta().toJson(),
+      'createdAt': timestamp,
+    };
 
     setState(() {
-      notes.add({
-        'city': _cityName ?? 'Unknown Location',
-        'document': _controller.document.toDelta().toJson(),
-        'createdAt': timestamp,
-      });
-
-      _controller.clear();
+      notes = [...notes, newNote];
     });
 
-    await _notesService.saveNote(notes.last);
+    await _notesService.saveNote(newNote);
+    _controller.clear();
   }
 
   Future<void> _confirmDeleteNote(int index) async {

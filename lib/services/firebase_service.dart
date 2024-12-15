@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '/models/user.dart';
+import '/services/user_services.dart';
 
 class FirebaseServices {
   static Future<void> initializeFirebase() async {
@@ -26,18 +26,14 @@ class FirebaseServices {
 
       final user = userCredential.user;
       if (user != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'firstName': firstName,
-          'lastName': lastName,
-          'email': email,
-        });
-
-        return AppUser(
+        AppUser newUser = AppUser(
           uid: user.uid,
           firstName: firstName,
           lastName: lastName,
           email: email,
         );
+        await UserService().saveUserData(newUser);
+        return newUser;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Error during sign-up: $e");
@@ -54,14 +50,14 @@ class FirebaseServices {
 
       final user = userCredential.user;
       if (user != null) {
-        DocumentSnapshot userData = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-
-        return AppUser.fromMap(userData.data() as Map<String, dynamic>);
+        Map<String, dynamic>? userData =
+            await UserService().getUserData(user.uid);
+        if (userData != null) {
+          return AppUser.fromMap(userData);
+        }
       }
     } catch (e) {
+      Fluttertoast.showToast(msg: "Error during sign-in: $e");
       return null;
     }
     return null;

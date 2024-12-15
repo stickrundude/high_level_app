@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:high_level_application/services/firebase_service.dart';
+import 'package:high_level_application/utils/validators.dart';
 import 'home_page.dart';
 import 'signup_page.dart';
 import '/services/login_services.dart';
@@ -13,9 +15,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  AudioPlayer audioPlayer = AudioPlayer();
-  String welcomeAudioPath = 'audio/welcome.mp3';
+  final AudioPlayer audioPlayer = AudioPlayer();
+  final String welcomeAudioPath = 'audio/welcome.mp3';
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final LoginService loginService =
+      LoginService(firebaseServices: FirebaseServices());
 
   @override
   void initState() {
@@ -26,62 +31,64 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void playWelcomeAudio() {
-      audioPlayer.play(AssetSource(welcomeAudioPath));
-      print("Audio played");
+    audioPlayer.play(AssetSource(welcomeAudioPath));
+    print("Audio played");
+  }
+
+  Future<void> loginUser(BuildContext context) async {
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
+
+    if (Validators.isEmptyField(email) || Validators.isEmptyField(password)) {
+      Fluttertoast.showToast(
+        msg: "Please fill in both email and password!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      return;
     }
+
+    if (!Validators.isValidEmail(email)) {
+      Fluttertoast.showToast(
+        msg: "Invalid email format. Please enter a valid email.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      return;
+    }
+
+    bool isSuccess = await loginService.loginUser(email, password);
+    if (isSuccess) {
+      Fluttertoast.showToast(msg: 'Login Successful');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TravelMateHomePage(),
+        ),
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Login failed. Please check your credentials.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    }
+  }
+
+  void navigateToSignUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignUpPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final LoginService loginService = LoginService();
-
-    Future<void> loginUser(BuildContext context) async {
-      final String email = emailController.text.trim();
-      final String password = passwordController.text.trim();
-
-      if (!loginService.isValidEmail(email)) {
-        Fluttertoast.showToast(
-          msg: "Invalid email format. Please enter a valid email.",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
-        return;
-      }
-
-      if (email.isEmpty || password.isEmpty) {
-        Fluttertoast.showToast(
-          msg: "Please fill in both email and password!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
-        return;
-      }
-
-      bool isSuccess = await loginService.loginUser(email, password);
-      if (isSuccess) {
-        Fluttertoast.showToast(msg: 'Login Successful');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const TravelMateHomePage(),
-          ),
-        );
-      }
-    }
-
-    void navigateToSignUp() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SignUpPage(),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to TravelMate '),
+        title: const Text('Welcome to TravelMate'),
         centerTitle: true,
       ),
       body: Padding(

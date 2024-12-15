@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'settings_page.dart';
 import 'map_page.dart';
 import 'camera_page.dart';
 import 'notes_page.dart';
 import '../widgets/custom_navigation_bar.dart';
+import '/services/user_services.dart';
 
 class TravelMateHomePage extends StatefulWidget {
   const TravelMateHomePage({super.key});
@@ -17,6 +18,7 @@ class TravelMateHomePage extends StatefulWidget {
 class _TravelMateHomePageState extends State<TravelMateHomePage> {
   int _selectedIndex = 0;
   String firstName = "";
+  final UserService _userService = UserService();
 
   static const List<Widget> _pages = <Widget>[
     MapPage(),
@@ -35,18 +37,12 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-
-        if (userDoc.exists) {
-          setState(() {
-            firstName = userDoc['firstName'] ?? "User";
-          });
-        }
+        final userData = await _userService.getUserData(user.uid);
+        setState(() {
+          firstName = userData?['firstName'] ?? "User";
+        });
       } catch (e) {
-        print("Error fetching user data: $e");
+        Fluttertoast.showToast(msg: "Error fetching user data: $e");
       }
     }
   }
