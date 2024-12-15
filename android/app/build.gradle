@@ -23,7 +23,7 @@ if (dotenvFile.exists()) {
 
 android {
     namespace = "com.example.high_level_application"
-    compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -39,7 +39,7 @@ android {
         applicationId = "com.example.high_level_application"
         minSdk = flutter.minSdkVersion
         minSdkVersion 23
-        targetSdk = flutter.targetSdkVersion
+        targetSdkVersion 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
