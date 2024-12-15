@@ -2,8 +2,25 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id "com.google.gms.google-services" 
+    id "com.google.gms.google-services"
 }
+
+// Load the .env file into Gradle environment after the plugins block
+def dotenvFile = rootProject.file('.env')
+if (dotenvFile.exists()) {
+    dotenvFile.eachLine { line ->
+        def (key, value) = line.split('=')
+        if (key.trim() && value.trim()) {
+            ext.set(key.trim(), value.trim())  // Store variables in ext for later use
+            if (key.trim() == "GOOGLE_MAPS_API_KEY") {
+                println "Loaded GOOGLE_MAPS_API_KEY: ${value.trim()}"
+            }
+        }
+    }
+} else {
+    println ".env file not found! Please make sure it exists in the root project directory."
+}
+
 android {
     namespace = "com.example.high_level_application"
     compileSdk = flutter.compileSdkVersion
@@ -25,11 +42,14 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // Pass the GOOGLE_MAPS_API_KEY from Flutter .env to Android resource
+        resValue "string", "google_maps_api_key", project.hasProperty("GOOGLE_MAPS_API_KEY") ? project.GOOGLE_MAPS_API_KEY : ""
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
     }
 }
