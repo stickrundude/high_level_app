@@ -42,6 +42,8 @@ dependencies:
   audioplayers: ^6.1.0
   google_maps_flutter: ^2.10.0
   geolocator: ^13.0.2
+  geocoding: ^3.0.0
+  flutter_quill: ^10.8.5
 
 
   # The following adds the Cupertino Icons font to your application.
