@@ -29,7 +29,6 @@ class _MapPageState extends State<MapPage> {
     // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      print('Location services are disabled.');
       return;
     }
 
@@ -39,7 +38,6 @@ class _MapPageState extends State<MapPage> {
       permission = await Geolocator.requestPermission();
       if (permission != LocationPermission.whileInUse &&
           permission != LocationPermission.always) {
-        print('Location permission denied');
         return;
       }
     }
@@ -61,7 +59,7 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : GoogleMap(
               initialCameraPosition: _initialPosition!,
               onMapCreated: (GoogleMapController controller) {
@@ -73,8 +71,8 @@ class _MapPageState extends State<MapPage> {
                   position: srhUniversity,
                 ),
               },
-              myLocationEnabled: true,  // Show current location on the map
-              myLocationButtonEnabled: true,  // Show location button
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
             ),
     );
   }
