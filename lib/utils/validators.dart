@@ -1,3 +1,5 @@
+import 'package:high_level_application/utils/constants.dart';
+
 class Validators {
   static bool isValidEmail(String email) {
     final RegExp emailRegex =
@@ -17,5 +19,9 @@ class Validators {
 
   static bool isEmptyField(String value) {
     return value.isEmpty;
+  }
+
+  static bool isNoteLimitExceeded(int count) {
+    return count >= maxFreeNotes;
   }
 }

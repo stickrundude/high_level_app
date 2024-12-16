@@ -278,6 +278,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "flutter_dotenv",
+      "rootUri": "file:///Users/kshitij/.pub-cache/hosted/pub.dev/flutter_dotenv-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_keyboard_visibility_linux",
       "rootUri": "file:///Users/kshitij/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0",
       "packageUri": "lib/",
@@ -890,7 +896,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-15T12:25:27.868992Z",
+  "generated": "2024-12-15T23:07:53.318981Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/kshitij/development/flutter",

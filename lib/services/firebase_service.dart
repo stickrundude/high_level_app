@@ -57,7 +57,6 @@ class FirebaseServices {
         }
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error during sign-in: $e");
       return null;
     }
     return null;

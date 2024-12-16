@@ -6,6 +6,7 @@ import 'home_page.dart';
 import 'signup_page.dart';
 import '/services/login_services.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '/widgets/background.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -91,41 +92,54 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('Welcome to TravelMate'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
+      body: BackgroundWidget(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 40),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  height: 250,
+                  width: 500,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
+              const SizedBox(height: 40),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => loginUser(context),
-              style: Theme.of(context).elevatedButtonTheme.style,
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: navigateToSignUp,
-              style: Theme.of(context).elevatedButtonTheme.style,
-              child: const Text('Sign Up'),
-            ),
-          ],
+              const SizedBox(height: 16),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => loginUser(context),
+                style: Theme.of(context).elevatedButtonTheme.style,
+                child: const Text('Login'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: navigateToSignUp,
+                style: Theme.of(context).elevatedButtonTheme.style,
+                child: const Text('Sign Up'),
+              ),
+            ],
+          ),
         ),
       ),
     );

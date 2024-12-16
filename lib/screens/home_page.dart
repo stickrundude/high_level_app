@@ -6,6 +6,7 @@ import 'map_page.dart';
 import 'camera_page.dart';
 import 'notes_page.dart';
 import '../widgets/custom_navigation_bar.dart';
+import '../widgets/background.dart';
 import '/services/user_services.dart';
 
 class TravelMateHomePage extends StatefulWidget {
@@ -62,10 +63,12 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(child: _pages[_selectedIndex]),
-        ],
+      body: BackgroundWidget(
+        child: Column(
+          children: [
+            Expanded(child: _pages[_selectedIndex]),
+          ],
+        ),
       ),
       bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,

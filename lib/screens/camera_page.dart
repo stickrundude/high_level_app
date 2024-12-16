@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/widgets/camera_preview.dart';
 import '/widgets/camera_controls.dart';
 import '/services/camera_services.dart';
+import '/widgets/background.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -91,33 +92,36 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _cameraService.controller?.value.isInitialized == true
-          ? Column(
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      CameraPreviewWidget(
-                        isGalleryImageSelected: _isGalleryImageSelected,
-                        selectedImagePath: _selectedImagePath,
-                        controller: _cameraService.controller!,
-                        containerWidth: MediaQuery.of(context).size.width * 0.9,
-                        containerHeight:
-                            MediaQuery.of(context).size.height * 0.6,
-                      ),
-                      if (!_isGalleryImageSelected) _buildCameraSwitcher(),
-                    ],
+      body: BackgroundWidget(
+        child: _cameraService.controller?.value.isInitialized == true
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        CameraPreviewWidget(
+                          isGalleryImageSelected: _isGalleryImageSelected,
+                          selectedImagePath: _selectedImagePath,
+                          controller: _cameraService.controller!,
+                          containerWidth:
+                              MediaQuery.of(context).size.width * 0.9,
+                          containerHeight:
+                              MediaQuery.of(context).size.height * 0.6,
+                        ),
+                        if (!_isGalleryImageSelected) _buildCameraSwitcher(),
+                      ],
+                    ),
                   ),
-                ),
-                CameraControls(
-                  onCapturePressed: _captureAndSavePicture,
-                  onGalleryPressed: _pickImageFromGallery,
-                  isCaptureActive: !_isGalleryImageSelected,
-                  isGalleryActive: _isGalleryImageSelected,
-                ),
-              ],
-            )
-          : const Center(child: CircularProgressIndicator()),
+                  CameraControls(
+                    onCapturePressed: _captureAndSavePicture,
+                    onGalleryPressed: _pickImageFromGallery,
+                    isCaptureActive: !_isGalleryImageSelected,
+                    isGalleryActive: _isGalleryImageSelected,
+                  ),
+                ],
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }
