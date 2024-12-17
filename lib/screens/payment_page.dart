@@ -89,7 +89,7 @@ class PaymentPage extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text("Payment Successful"),
+                child: const Text("Pay"),
               )
             ],
           ),

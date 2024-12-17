@@ -19,7 +19,7 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final quill.QuillController _controller = quill.QuillController.basic();
+  quill.QuillController _controller = quill.QuillController.basic();
   List<Map<String, dynamic>> notes = [];
   String? _cityName;
   final NotesService _notesService = NotesService();
@@ -35,7 +35,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> _getCurrentCity() async {
-    String? city = await getCurrentCity();
+    final city = await getCurrentCity();
     if (mounted) {
       setState(() {
         _cityName = city ?? 'Unknown Location';
@@ -44,7 +44,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> _loadUserNotes() async {
-    var userNotes = await _notesService.getNotes();
+    final userNotes = await _notesService.getNotes();
     if (mounted) {
       setState(() {
         notes = userNotes.map((noteData) {
@@ -53,8 +53,8 @@ class _NotesPageState extends State<NotesPage> {
         }).toList();
 
         notes.sort((a, b) {
-          var aTimestamp = a['createdAt'] ?? DateTime(0);
-          var bTimestamp = b['createdAt'] ?? DateTime(0);
+          final aTimestamp = a['createdAt'] ?? DateTime(0);
+          final bTimestamp = b['createdAt'] ?? DateTime(0);
           return aTimestamp.compareTo(bTimestamp);
         });
       });
@@ -79,7 +79,7 @@ class _NotesPageState extends State<NotesPage> {
       return;
     }
 
-    int maxNotesAllowed = isSubscriptionActive ? 999999 : maxFreeNotes;
+    final maxNotesAllowed = isSubscriptionActive ? 999999 : maxFreeNotes;
 
     if (notes.length >= maxNotesAllowed && !isSubscriptionActive) {
       final shouldUpgrade = await showUpgradeDialog(
@@ -89,7 +89,6 @@ class _NotesPageState extends State<NotesPage> {
             context,
             MaterialPageRoute(builder: (context) => const PaymentPage()),
           );
-
           if (result == true) {
             await _checkSubscriptionStatus();
             await _saveNoteAfterPayment();
@@ -106,7 +105,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> _saveNoteAfterPayment() async {
-    var timestamp = DateTime.now();
+    final timestamp = DateTime.now();
     final newNote = {
       'city': _cityName ?? 'Unknown Location',
       'document': _controller.document.toDelta().toJson(),
@@ -118,7 +117,11 @@ class _NotesPageState extends State<NotesPage> {
     });
 
     await _notesService.saveNote(newNote);
-    _controller.clear();
+
+    setState(() {
+      _controller = quill.QuillController.basic();
+    });
+
     showToast('Note saved successfully!');
   }
 
@@ -130,7 +133,7 @@ class _NotesPageState extends State<NotesPage> {
       return;
     }
 
-    bool? confirmDelete = await confirmDeleteNoteDialog(bottomSheetContext);
+    final confirmDelete = await confirmDeleteNoteDialog(bottomSheetContext);
 
     if (confirmDelete == true) {
       setState(() {
