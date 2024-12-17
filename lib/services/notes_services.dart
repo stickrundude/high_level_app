@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '/utils/constants.dart';
 import '/services/user_services.dart';
-import '/utils/validators.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class NotesService {
@@ -14,15 +12,6 @@ class NotesService {
       final userUid = await _userService.getCurrentUserUid();
       if (userUid == null) {
         throw Exception('User not logged in');
-      }
-
-      final noteCount = await _userService.getNoteCount();
-      if (Validators.isNoteLimitExceeded(noteCount)) {
-        Fluttertoast.showToast(
-          msg:
-              'Note limit of $maxFreeNotes reached. Please upgrade to save more notes.',
-        );
-        return;
       }
 
       if (!note.containsKey('city') || !note.containsKey('document')) {

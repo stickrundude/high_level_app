@@ -94,12 +94,15 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 200),
                 TextField(
                   controller: firstNameController,
                   decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     labelText: 'First Name',
                     border: OutlineInputBorder(),
                   ),
@@ -108,6 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 TextField(
                   controller: lastNameController,
                   decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     labelText: 'Last Name',
                     border: OutlineInputBorder(),
                   ),
@@ -116,6 +121,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 TextField(
                   controller: emailController,
                   decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
@@ -125,6 +132,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   controller: passwordController,
                   obscureText: !isPasswordVisible,
                   decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
                     labelText: 'Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(

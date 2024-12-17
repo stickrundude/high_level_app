@@ -43,11 +43,23 @@ class UserService {
     }
   }
 
-  Future<void> deleteUser(String uid) async {
+  Future<void> deleteUser(String email) async {
     try {
-      await _firestore.collection('users').doc(uid).delete();
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .delete();
+        await user.delete();
+
+        print("User deleted successfully");
+      } else {
+        print("No user logged in");
+      }
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error deleting user document: $e");
+      print("Error deleting user: $e");
     }
   }
 
@@ -71,6 +83,17 @@ class UserService {
     } catch (e) {
       Fluttertoast.showToast(msg: "Error getting note count: $e");
       return 0;
+    }
+  }
+
+  Future<void> updateSubscriptionStatus(
+      String uid, bool subscriptionStatus) async {
+    try {
+      await _firestore.collection('users').doc(uid).update({
+        'subscriptionStatus': subscriptionStatus,
+      });
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Error updating subscription status: $e");
     }
   }
 }

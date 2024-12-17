@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '/widgets/background.dart';
+import '/services/user_services.dart';
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key}) : super(key: key);
+  const PaymentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserService _userService = UserService();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment Page'),
@@ -71,8 +74,14 @@ class PaymentPage extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
+                onPressed: () async {
+                  final userId = await _userService.getCurrentUserUid();
+                  if (userId != null) {
+                    await _userService.updateSubscriptionStatus(userId, true);
+                  }
+
+                  Navigator.pop(context, true);
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Payment successful! Returning to Notes."),
@@ -81,7 +90,7 @@ class PaymentPage extends StatelessWidget {
                   );
                 },
                 child: const Text("Payment Successful"),
-              ),
+              )
             ],
           ),
         ),

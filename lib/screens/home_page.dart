@@ -5,8 +5,8 @@ import 'settings_page.dart';
 import 'map_page.dart';
 import 'camera_page.dart';
 import 'notes_page.dart';
-import '../widgets/custom_navigation_bar.dart';
-import '../widgets/background.dart';
+import '/widgets/custom_navigation_bar.dart';
+import '/widgets/background.dart';
 import '/services/user_services.dart';
 
 class TravelMateHomePage extends StatefulWidget {

@@ -52,10 +52,25 @@ class SavedNotes extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               notes.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "No saved notes",
-                        style: TextStyle(color: Colors.black54),
+                  ? Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 91, 91, 91),
+                          width: 1.5,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "No saved notes",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     )
                   : Expanded(
@@ -64,7 +79,9 @@ class SavedNotes extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return NoteCardWidget(
                             note: notes[index],
-                            onDelete: () => onDeleteNote(index),
+                            onDelete: () {
+                              onDeleteNote(index);
+                            },
                           );
                         },
                       ),

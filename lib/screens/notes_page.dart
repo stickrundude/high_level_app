@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:high_level_application/services/location_services.dart';
+import '/screens/payment_page.dart';
+import '/services/location_services.dart';
+import '/utils/constants.dart';
 import '/widgets/quill_toolbar.dart';
 import '/services/notes_services.dart';
 import '/widgets/background.dart';
 import '/widgets/city_info_widget.dart';
 import '/models/saved_notes.dart';
 import '/utils/dialogs.dart';
-import '/utils/constants.dart';
+import '/services/user_services.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -21,12 +23,15 @@ class _NotesPageState extends State<NotesPage> {
   List<Map<String, dynamic>> notes = [];
   String? _cityName;
   final NotesService _notesService = NotesService();
+  final UserService _userService = UserService();
+  bool isSubscriptionActive = false;
 
   @override
   void initState() {
     super.initState();
     _getCurrentCity();
     _loadUserNotes();
+    _checkSubscriptionStatus();
   }
 
   Future<void> _getCurrentCity() async {
@@ -56,17 +61,51 @@ class _NotesPageState extends State<NotesPage> {
     }
   }
 
+  Future<void> _checkSubscriptionStatus() async {
+    final userId = await _userService.getCurrentUserUid();
+    if (userId != null) {
+      final userData = await _userService.getUserData(userId);
+      if (userData != null) {
+        setState(() {
+          isSubscriptionActive = userData['subscriptionStatus'] ?? false;
+        });
+      }
+    }
+  }
+
   Future<void> _saveNote() async {
     if (_controller.document.isEmpty()) {
       showToast('Note is empty. Please write something.');
       return;
     }
 
-    if (notes.length >= maxFreeNotes) {
-      showUpgradeDialog(context);
-      return;
-    }
+    int maxNotesAllowed = isSubscriptionActive ? 999999 : maxFreeNotes;
 
+    if (notes.length >= maxNotesAllowed && !isSubscriptionActive) {
+      final shouldUpgrade = await showUpgradeDialog(
+        context,
+        onPayPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PaymentPage()),
+          );
+
+          if (result == true) {
+            await _checkSubscriptionStatus();
+            await _saveNoteAfterPayment();
+          }
+        },
+      );
+
+      if (shouldUpgrade == false) {
+        return;
+      }
+    } else {
+      await _saveNoteAfterPayment();
+    }
+  }
+
+  Future<void> _saveNoteAfterPayment() async {
     var timestamp = DateTime.now();
     final newNote = {
       'city': _cityName ?? 'Unknown Location',
@@ -83,14 +122,15 @@ class _NotesPageState extends State<NotesPage> {
     showToast('Note saved successfully!');
   }
 
-  Future<void> _confirmDeleteNote(int index) async {
+  Future<void> _confirmDeleteNote(
+      int index, BuildContext bottomSheetContext) async {
     final noteId = notes[index]['id'];
     if (noteId == null) {
       showToast('Error: Note ID is null');
       return;
     }
 
-    bool? confirmDelete = await confirmDeleteNoteDialog(context);
+    bool? confirmDelete = await confirmDeleteNoteDialog(bottomSheetContext);
 
     if (confirmDelete == true) {
       setState(() {
@@ -100,11 +140,11 @@ class _NotesPageState extends State<NotesPage> {
       try {
         await _notesService.deleteNote(noteId);
         showToast('Note deleted!');
+        Navigator.pop(bottomSheetContext);
+        _showSavedNotes();
       } catch (e) {
         showToast('Error deleting note from Firestore: $e');
       }
-
-      Navigator.pop(context);
     }
   }
 
@@ -115,10 +155,12 @@ class _NotesPageState extends State<NotesPage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      builder: (context) {
+      builder: (bottomSheetContext) {
         return SavedNotes(
           notes: notes,
-          onDeleteNote: _confirmDeleteNote,
+          onDeleteNote: (index) {
+            _confirmDeleteNote(index, bottomSheetContext);
+          },
         );
       },
     );

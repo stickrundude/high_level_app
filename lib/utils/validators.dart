@@ -1,4 +1,4 @@
-import 'package:high_level_application/utils/constants.dart';
+import '/utils/constants.dart';
 
 class Validators {
   static bool isValidEmail(String email) {

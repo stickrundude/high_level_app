@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '/screens/payment_page.dart';
 
-void showUpgradeDialog(BuildContext context) {
-  showDialog(
+Future<bool?> showUpgradeDialog(BuildContext context,
+    {required Function onPayPressed}) {
+  return showDialog<bool>(
     context: context,
     builder: (context) {
       return AlertDialog(
@@ -14,19 +14,14 @@ void showUpgradeDialog(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, false);
             },
             child: const Text("Cancel"),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PaymentPage(),
-                ),
-              );
+              Navigator.pop(context, true);
+              onPayPressed();
             },
             child: const Text("Pay"),
           ),
