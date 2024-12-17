@@ -83,7 +83,8 @@ flutter:
   assets:
      - assets/audio/welcome.mp3
      - lib/l10n/
-  #   - images/a_dot_ham.jpeg
+     - assets/images/image.jpg
+     - assets/images/logo.png
 
   # Enable the generation of localization files
   generate: true

@@ -5,10 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 class NotesService {
   final CollectionReference _notesCollection =
       FirebaseFirestore.instance.collection('notes');
+  final UserService _userService = UserService();
 
   Future<void> saveNote(Map<String, dynamic> note) async {
     try {
-      final userUid = await UserService().getCurrentUserUid();
+      final userUid = await _userService.getCurrentUserUid();
       if (userUid == null) {
         throw Exception('User not logged in');
       }
@@ -17,11 +18,13 @@ class NotesService {
         throw Exception('Invalid note data. Missing city or document fields.');
       }
 
+      final createdAt = DateTime.now();
       if (note['id'] == null) {
         final docRef = await _notesCollection.add({
           'city': note['city'],
           'document': note['document'],
           'uid': userUid,
+          'createdAt': createdAt,
         });
         note['id'] = docRef.id;
       } else {
@@ -29,6 +32,7 @@ class NotesService {
           'city': note['city'],
           'document': note['document'],
           'uid': userUid,
+          'createdAt': createdAt,
         });
       }
     } catch (e) {
@@ -38,23 +42,26 @@ class NotesService {
 
   Future<List<Map<String, dynamic>>> getNotes() async {
     try {
-      final userUid = await UserService().getCurrentUserUid();
+      final userUid = await _userService.getCurrentUserUid();
       if (userUid == null) {
-        throw Exception('User not logged in');
+        return [];
       }
 
-      final snapshot =
-          await _notesCollection.where('uid', isEqualTo: userUid).get();
+      final querySnapshot = await _notesCollection
+          .where('uid', isEqualTo: userUid)
+          .orderBy('createdAt', descending: true)
+          .get();
 
-      return snapshot.docs.map((doc) {
+      return querySnapshot.docs.map((doc) {
         return {
           'id': doc.id,
           'city': doc['city'],
           'document': doc['document'],
+          'createdAt': doc['createdAt'].toDate(),
         };
       }).toList();
     } catch (e) {
-      Fluttertoast.showToast(msg: 'Error fetching notes: $e');
+      Fluttertoast.showToast(msg: 'Error loading notes: $e');
       return [];
     }
   }

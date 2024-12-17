@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/widgets/camera_preview.dart';
 import '/widgets/camera_controls.dart';
 import '/services/camera_services.dart';
+import '/widgets/background.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -70,11 +71,11 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget _buildCameraSwitcher() {
     return Positioned(
-      top: 80,
-      right: 35,
+      top: 20,
+      right: 20,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 75, 177, 246).withOpacity(0.5),
+          color: const Color.fromARGB(255, 91, 91, 91).withOpacity(0.5),
           borderRadius: BorderRadius.circular(12),
         ),
         padding: const EdgeInsets.all(1.0),
@@ -91,33 +92,45 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _cameraService.controller?.value.isInitialized == true
-          ? Column(
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      CameraPreviewWidget(
-                        isGalleryImageSelected: _isGalleryImageSelected,
-                        selectedImagePath: _selectedImagePath,
-                        controller: _cameraService.controller!,
-                        containerWidth: MediaQuery.of(context).size.width * 0.9,
-                        containerHeight:
-                            MediaQuery.of(context).size.height * 0.6,
-                      ),
-                      if (!_isGalleryImageSelected) _buildCameraSwitcher(),
-                    ],
+      body: BackgroundWidget(
+        child: _cameraService.controller?.value.isInitialized == true
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 91, 91, 91),
+                              width: 2.5,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.white,
+                          ),
+                          child: CameraPreviewWidget(
+                            isGalleryImageSelected: _isGalleryImageSelected,
+                            selectedImagePath: _selectedImagePath,
+                            controller: _cameraService.controller!,
+                            containerWidth: double.infinity,
+                            containerHeight: double.infinity,
+                          ),
+                        ),
+                        if (!_isGalleryImageSelected) _buildCameraSwitcher(),
+                      ],
+                    ),
                   ),
-                ),
-                CameraControls(
-                  onCapturePressed: _captureAndSavePicture,
-                  onGalleryPressed: _pickImageFromGallery,
-                  isCaptureActive: !_isGalleryImageSelected,
-                  isGalleryActive: _isGalleryImageSelected,
-                ),
-              ],
-            )
-          : const Center(child: CircularProgressIndicator()),
+                  CameraControls(
+                    onCapturePressed: _captureAndSavePicture,
+                    onGalleryPressed: _pickImageFromGallery,
+                    isCaptureActive: !_isGalleryImageSelected,
+                    isGalleryActive: _isGalleryImageSelected,
+                  ),
+                ],
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

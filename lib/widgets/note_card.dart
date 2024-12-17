@@ -14,15 +14,22 @@ class NoteCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final documentJson = note['document'];
-
     final quillController = quill.QuillController(
       document: documentJson is quill.Document
           ? documentJson
           : quill.Document.fromJson(documentJson),
-      selection: TextSelection.collapsed(offset: 0),
+      selection: const TextSelection.collapsed(offset: 0),
     );
 
     return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        side: const BorderSide(
+          color: Color.fromARGB(255, 91, 91, 91),
+          width: 2.0,
+        ),
+      ),
       child: ListTile(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,9 +41,18 @@ class NoteCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             SizedBox(
-              height: 80,
               child: quill.QuillEditor.basic(
                 controller: quillController,
+                configurations: const quill.QuillEditorConfigurations(
+                  scrollable: true,
+                  autoFocus: false,
+                  showCursor: false,
+                  expands: false,
+                  padding: EdgeInsets.zero,
+                  sharedConfigurations: quill.QuillSharedConfigurations(
+                    locale: Locale('en'),
+                  ),
+                ),
               ),
             ),
           ],

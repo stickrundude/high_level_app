@@ -5,7 +5,7 @@ import 'settings_page.dart';
 import 'map_page.dart';
 import 'camera_page.dart';
 import 'notes_page.dart';
-import '../widgets/custom_navigation_bar.dart'; // Custom Navigation Bar
+import '../widgets/custom_navigation_bar.dart';
 import '/services/user_services.dart';
 
 class TravelMateHomePage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
   String firstName = "";
   final UserService _userService = UserService();
 
-  static final List<Widget> _pages = <Widget>[
+  static const List<Widget> _pages = <Widget>[
     MapPage(),
     CameraPage(),
     NotesPage(),
@@ -30,7 +30,7 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
   @override
   void initState() {
     super.initState();
-    _fetchUserData();  // Fetch the user data when the page is initialized
+    _fetchUserData();
   }
 
   Future<void> _fetchUserData() async {
@@ -39,7 +39,7 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
       try {
         final userData = await _userService.getUserData(user.uid);
         setState(() {
-          firstName = userData?['firstName'] ?? "User"; // Default to "User" if no first name
+          firstName = userData?['firstName'] ?? "User";
         });
       } catch (e) {
         Fluttertoast.showToast(msg: "Error fetching user data: $e");
@@ -47,7 +47,6 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
     }
   }
 
-  // Handles the tap on a bottom navigation item
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -59,16 +58,16 @@ class _TravelMateHomePageState extends State<TravelMateHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          firstName.isNotEmpty ? "Logged in as $firstName" : "Loading...", // Show user's name
+          firstName.isNotEmpty ? "Logged in as $firstName" : "Loading...",
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: Column(
         children: [
-          Expanded(child: _pages[_selectedIndex]),  // Display page based on selection
+          Expanded(child: _pages[_selectedIndex]),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(  // Bottom navigation bar
+      bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),

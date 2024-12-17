@@ -4,15 +4,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '/models/user.dart';
 
 class UserService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<String?> getCurrentUserUid() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = _auth.currentUser;
     return user?.uid;
   }
 
   Future<Map<String, dynamic>?> getUserData(String uid) async {
     try {
       DocumentSnapshot userData =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+          await _firestore.collection('users').doc(uid).get();
       return userData.data() as Map<String, dynamic>?;
     } catch (e) {
       Fluttertoast.showToast(msg: "Error fetching user data: $e");
@@ -22,7 +25,7 @@ class UserService {
 
   Future<void> saveUserData(AppUser user) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      await _firestore.collection('users').doc(user.uid).set({
         'firstName': user.firstName,
         'lastName': user.lastName,
         'email': user.email,
@@ -34,25 +37,63 @@ class UserService {
 
   Future<void> updateUserData(String uid, Map<String, dynamic> updates) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .update(updates);
+      await _firestore.collection('users').doc(uid).update(updates);
     } catch (e) {
       Fluttertoast.showToast(msg: "Error updating user data: $e");
     }
   }
 
-  Future<void> deleteUser(String uid) async {
+  Future<void> deleteUser(String email) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(uid).delete();
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .delete();
+        await user.delete();
+
+        print("User deleted successfully");
+      } else {
+        print("No user logged in");
+      }
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error deleting user document: $e");
+      print("Error deleting user: $e");
     }
   }
 
   bool isUserLoggedIn() {
-    final user = FirebaseAuth.instance.currentUser;
-    return user != null;
+    return _auth.currentUser != null;
+  }
+
+  Future<int> getNoteCount() async {
+    try {
+      final userId = await getCurrentUserUid();
+      if (userId == null) {
+        throw Exception("User not logged in");
+      }
+
+      final notesSnapshot = await _firestore
+          .collection('notes')
+          .where('uid', isEqualTo: userId)
+          .get();
+
+      return notesSnapshot.docs.length;
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Error getting note count: $e");
+      return 0;
+    }
+  }
+
+  Future<void> updateSubscriptionStatus(
+      String uid, bool subscriptionStatus) async {
+    try {
+      await _firestore.collection('users').doc(uid).update({
+        'subscriptionStatus': subscriptionStatus,
+      });
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Error updating subscription status: $e");
+    }
   }
 }

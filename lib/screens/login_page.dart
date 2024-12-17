@@ -25,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool isLoading = false;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -145,10 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                 isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : ElevatedButton(
-                  onPressed: () => loginUser(context),
-                  style: Theme.of(context).elevatedButtonTheme.style,
-                  child: const Text('Login'),
-                ),
+                        onPressed: () => loginUser(context),
+                        style: Theme.of(context).elevatedButtonTheme.style,
+                        child: const Text('Login'),
+                      ),
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: navigateToSignUp,

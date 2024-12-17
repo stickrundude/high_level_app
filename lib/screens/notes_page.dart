@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:fluttertoast/fluttertoast.dart';
-import '/widgets/quill_toolbar.dart';
-import '/widgets/note_card.dart';
+import '/screens/payment_page.dart';
 import '/services/location_services.dart';
+import '/utils/constants.dart';
+import '/widgets/quill_toolbar.dart';
 import '/services/notes_services.dart';
+import '/widgets/background.dart';
+import '/widgets/city_info_widget.dart';
+import '/models/saved_notes.dart';
+import '/utils/dialogs.dart';
+import '/services/user_services.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -14,20 +19,23 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final quill.QuillController _controller = quill.QuillController.basic();
+  quill.QuillController _controller = quill.QuillController.basic();
   List<Map<String, dynamic>> notes = [];
   String? _cityName;
   final NotesService _notesService = NotesService();
+  final UserService _userService = UserService();
+  bool isSubscriptionActive = false;
 
   @override
   void initState() {
     super.initState();
     _getCurrentCity();
     _loadUserNotes();
+    _checkSubscriptionStatus();
   }
 
   Future<void> _getCurrentCity() async {
-    String? city = await getCurrentCity();
+    final city = await getCurrentCity();
     if (mounted) {
       setState(() {
         _cityName = city ?? 'Unknown Location';
@@ -36,7 +44,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> _loadUserNotes() async {
-    var userNotes = await _notesService.getNotes();
+    final userNotes = await _notesService.getNotes();
     if (mounted) {
       setState(() {
         notes = userNotes.map((noteData) {
@@ -45,18 +53,59 @@ class _NotesPageState extends State<NotesPage> {
         }).toList();
 
         notes.sort((a, b) {
-          var aTimestamp = a['createdAt'] ?? DateTime(0);
-          var bTimestamp = b['createdAt'] ?? DateTime(0);
+          final aTimestamp = a['createdAt'] ?? DateTime(0);
+          final bTimestamp = b['createdAt'] ?? DateTime(0);
           return aTimestamp.compareTo(bTimestamp);
         });
       });
     }
   }
 
-  void _saveNote() async {
-    if (_controller.document.isEmpty()) return;
+  Future<void> _checkSubscriptionStatus() async {
+    final userId = await _userService.getCurrentUserUid();
+    if (userId != null) {
+      final userData = await _userService.getUserData(userId);
+      if (userData != null) {
+        setState(() {
+          isSubscriptionActive = userData['subscriptionStatus'] ?? false;
+        });
+      }
+    }
+  }
 
-    var timestamp = DateTime.now();
+  Future<void> _saveNote() async {
+    if (_controller.document.isEmpty()) {
+      showToast('Note is empty. Please write something.');
+      return;
+    }
+
+    final maxNotesAllowed = isSubscriptionActive ? 999999 : maxFreeNotes;
+
+    if (notes.length >= maxNotesAllowed && !isSubscriptionActive) {
+      final shouldUpgrade = await showUpgradeDialog(
+        context,
+        onPayPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PaymentPage()),
+          );
+          if (result == true) {
+            await _checkSubscriptionStatus();
+            await _saveNoteAfterPayment();
+          }
+        },
+      );
+
+      if (shouldUpgrade == false) {
+        return;
+      }
+    } else {
+      await _saveNoteAfterPayment();
+    }
+  }
+
+  Future<void> _saveNoteAfterPayment() async {
+    final timestamp = DateTime.now();
     final newNote = {
       'city': _cityName ?? 'Unknown Location',
       'document': _controller.document.toDelta().toJson(),
@@ -68,37 +117,23 @@ class _NotesPageState extends State<NotesPage> {
     });
 
     await _notesService.saveNote(newNote);
-    _controller.clear();
+
+    setState(() {
+      _controller = quill.QuillController.basic();
+    });
+
+    showToast('Note saved successfully!');
   }
 
-  Future<void> _confirmDeleteNote(int index) async {
+  Future<void> _confirmDeleteNote(
+      int index, BuildContext bottomSheetContext) async {
     final noteId = notes[index]['id'];
     if (noteId == null) {
-      Fluttertoast.showToast(msg: 'Error: Note ID is null');
+      showToast('Error: Note ID is null');
       return;
     }
 
-    bool? confirmDelete = await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this note?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: const Text('No'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    );
+    final confirmDelete = await confirmDeleteNoteDialog(bottomSheetContext);
 
     if (confirmDelete == true) {
       setState(() {
@@ -107,73 +142,90 @@ class _NotesPageState extends State<NotesPage> {
 
       try {
         await _notesService.deleteNote(noteId);
-        Fluttertoast.showToast(msg: 'Note deleted!');
+        showToast('Note deleted!');
+        Navigator.pop(bottomSheetContext);
+        _showSavedNotes();
       } catch (e) {
-        Fluttertoast.showToast(msg: 'Error deleting note from Firestore: $e');
+        showToast('Error deleting note from Firestore: $e');
       }
     }
+  }
+
+  void _showSavedNotes() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (bottomSheetContext) {
+        return SavedNotes(
+          notes: notes,
+          onDeleteNote: (index) {
+            _confirmDeleteNote(index, bottomSheetContext);
+          },
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                _cityName != null
-                    ? "Notes are being stored in: $_cityName"
-                    : "Fetching your city...",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            QuillToolbarWidget(controller: _controller),
-            const SizedBox(height: 8),
-            Expanded(
-              flex: 3,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
+      body: BackgroundWidget(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CityInfoWidget(cityName: _cityName),
+              const SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1.5),
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 91, 91, 91), width: 1.5),
                   borderRadius: BorderRadius.circular(8),
+                  color: Colors.white,
                 ),
-                child: quill.QuillEditor.basic(
-                  controller: _controller,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: QuillToolbarWidget(controller: _controller),
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Center(
-              child: ElevatedButton(
-                onPressed: _saveNote,
-                child: const Text('Save Note'),
+              const SizedBox(height: 8),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 91, 91, 91),
+                        width: 1.5),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: quill.QuillEditor.basic(
+                    controller: _controller,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Saved Notes:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              flex: 4,
-              child: ListView.builder(
-                itemCount: notes.length,
-                itemBuilder: (context, index) {
-                  return NoteCardWidget(
-                    note: notes[index],
-                    onDelete: () => _confirmDeleteNote(index),
-                  );
-                },
+              const SizedBox(height: 12),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _saveNote,
+                  child: const Text('Save Note'),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _showSavedNotes,
+                  child: const Text('View Saved Notes'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

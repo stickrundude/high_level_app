@@ -39,13 +39,8 @@ class CameraPreviewWidget extends StatelessWidget {
     return Container(
       width: containerWidth,
       height: containerHeight,
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: const Color.fromARGB(255, 203, 221, 236), width: 2),
-        borderRadius: BorderRadius.circular(12),
-      ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
         child: CameraPreview(controller),
       ),
     );
