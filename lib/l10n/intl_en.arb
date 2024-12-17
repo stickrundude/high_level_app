@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "welcome": "Welcome to TravelMate",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "password": "Password",
+  "currentPassword" : "Current Password",
+  "changePassword" : "Change Password",
+  "repeatPassword" : "Repeat Password",
+  "loginSuccess": "Login Successful",
+  "loginFailed": "Login failed. Please check your credentials.",
+  "signupFailed": "Sign-up failed. Please try again.",
+  "signupSuccess": "Sign-up successful!",
+  "save": "Save",
+  "language" : "Language",
+  "settings" : "Settings",
+  "logout" : "Logout"
+}

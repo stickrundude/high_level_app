@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
   firebase_core: ^3.8.1
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.5.1
@@ -45,12 +48,13 @@ dependencies:
   geocoding: ^3.0.0
   flutter_quill: ^10.8.5
   flutter_dotenv: ^5.2.1
+  shared_preferences: ^2.0.15
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  
+
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +66,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  intl_utils: ^2.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,7 +82,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/audio/welcome.mp3
+     - lib/l10n/
   #   - images/a_dot_ham.jpeg
+
+  # Enable the generation of localization files
+  generate: true
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -104,3 +113,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Localization configuration
+flutter_intl:
+  enabled: true
+  arb-dir: lib/l10n
+  template-arb-file: intl_en.arb
+  output-localization-file: app_localizations.dart
+  supported-locales:
+    - en
+    - de

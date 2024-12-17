@@ -1,0 +1,21 @@
+{
+  "@@locale": "de",
+  "welcome": "Willkommen bei TravelMate",
+  "login": "Anmelden",
+  "signUp": "Registrieren",
+  "firstName": "Vorname",
+  "lastName": "Nachname",
+  "email": "E-Mail",
+  "password": "Passwort",
+  "currentPassword" : "Aktuelles Passwort",
+  "changePassword" : "Passwort ändern",
+  "repeatPassword" : "Password wiederholen",
+  "loginSuccess": "Erfolgreich angemeldet",
+  "loginFailed": "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldeinformationen.",
+  "signupFailed": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+  "signupSuccess": "Registrierung erfolgreich!",
+  "save" : "Speichern",
+  "language" : "Sprache",
+  "settings" : "Einstellungen",
+  "logout" : "Abmelden"
+}
