@@ -7,6 +7,10 @@ class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Payment Page'),
+        centerTitle: true,
+      ),
       body: BackgroundWidget(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -14,20 +18,25 @@ class PaymentPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Payment Page",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 91, 91, 91),
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Fill out the fields below to complete your mock payment.",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                padding: const EdgeInsets.all(12.0),
+                child: const Text(
+                  "Fill out the fields below to complete your payment",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const SizedBox(height: 32),
               TextField(

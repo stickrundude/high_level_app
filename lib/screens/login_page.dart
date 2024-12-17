@@ -113,6 +113,8 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 controller: emailController,
                 decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
@@ -122,6 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                 controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                 ),

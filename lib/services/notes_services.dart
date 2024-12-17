@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:high_level_application/utils/constants.dart';
+import '/utils/constants.dart';
 import '/services/user_services.dart';
 import '/utils/validators.dart';
 import 'package:fluttertoast/fluttertoast.dart';

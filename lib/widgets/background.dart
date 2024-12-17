@@ -17,7 +17,7 @@ class BackgroundWidget extends StatelessWidget {
       children: [
         ColorFiltered(
           colorFilter: ColorFilter.mode(
-            Colors.white.withOpacity(0.5),
+            Colors.white.withOpacity(0.0),
             BlendMode.lighten,
           ),
           child: Image.asset(
