@@ -10,6 +10,7 @@ import '/widgets/city_info_widget.dart';
 import '/models/saved_notes.dart';
 import '/utils/dialogs.dart';
 import '/services/user_services.dart';
+import '/generated/l10n.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -75,7 +76,7 @@ class _NotesPageState extends State<NotesPage> {
 
   Future<void> _saveNote() async {
     if (_controller.document.isEmpty()) {
-      showToast('Note is empty. Please write something.');
+      showToast(S.of(context).noteEmptyMessage);
       return;
     }
 
@@ -122,14 +123,14 @@ class _NotesPageState extends State<NotesPage> {
       _controller = quill.QuillController.basic();
     });
 
-    showToast('Note saved successfully!');
+    showToast(S.of(context).noteSavedMessage);
   }
 
   Future<void> _confirmDeleteNote(
       int index, BuildContext bottomSheetContext) async {
     final noteId = notes[index]['id'];
     if (noteId == null) {
-      showToast('Error: Note ID is null');
+      showToast(S.of(context).noteErrorMessage);
       return;
     }
 
@@ -142,11 +143,11 @@ class _NotesPageState extends State<NotesPage> {
 
       try {
         await _notesService.deleteNote(noteId);
-        showToast('Note deleted!');
+        showToast(S.of(context).noteDeletedMessage);
         Navigator.pop(bottomSheetContext);
         _showSavedNotes();
       } catch (e) {
-        showToast('Error deleting note from Firestore: $e');
+        showToast(S.of(context).errorDeletingNoteMessage);
       }
     }
   }
@@ -214,14 +215,14 @@ class _NotesPageState extends State<NotesPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: _saveNote,
-                  child: const Text('Save Note'),
+                  child: Text(S.of(context).saveNote),
                 ),
               ),
               const SizedBox(height: 12),
               Center(
                 child: ElevatedButton(
                   onPressed: _showSavedNotes,
-                  child: const Text('View Saved Notes'),
+                  child: Text(S.of(context).viewSavedNotes),
                 ),
               ),
             ],

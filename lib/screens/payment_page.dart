@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/widgets/background.dart';
 import '/services/user_services.dart';
+import '/generated/l10n.dart';
 
 class PaymentPage extends StatelessWidget {
   const PaymentPage({super.key});
@@ -11,7 +12,7 @@ class PaymentPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment Page'),
+        title: Text(S.of(context).paymentPageTitle),
         centerTitle: true,
       ),
       body: BackgroundWidget(
@@ -32,10 +33,10 @@ class PaymentPage extends StatelessWidget {
                   color: Colors.white,
                 ),
                 padding: const EdgeInsets.all(12.0),
-                child: const Text(
-                  "Fill out the fields below to complete your payment",
+                child: Text(
+                  S.of(context).fillOutFieldsToCompletePayment,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
                   ),
@@ -44,7 +45,7 @@ class PaymentPage extends StatelessWidget {
               const SizedBox(height: 32),
               TextField(
                 decoration: InputDecoration(
-                  labelText: "Card Number",
+                  labelText: S.of(context).cardNumber,
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
@@ -54,7 +55,7 @@ class PaymentPage extends StatelessWidget {
               const SizedBox(height: 16),
               TextField(
                 decoration: InputDecoration(
-                  labelText: "Expiry Date (MM/YY)",
+                  labelText: S.of(context).expiryDate,
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
@@ -64,7 +65,7 @@ class PaymentPage extends StatelessWidget {
               const SizedBox(height: 16),
               TextField(
                 decoration: InputDecoration(
-                  labelText: "CVV",
+                  labelText: S.of(context).cvv,
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
@@ -83,13 +84,13 @@ class PaymentPage extends StatelessWidget {
                   Navigator.pop(context, true);
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Payment successful! Returning to Notes."),
-                      duration: Duration(seconds: 2),
+                    SnackBar(
+                      content: Text(S.of(context).paymentSuccessfulMessage),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                 },
-                child: const Text("Pay"),
+                child: Text(S.of(context).pay),
               )
             ],
           ),

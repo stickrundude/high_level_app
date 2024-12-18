@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/note_card.dart';
+import '/generated/l10n.dart';
 
 class SavedNotes extends StatelessWidget {
   final List<Map<String, dynamic>> notes;
@@ -37,11 +38,11 @@ class SavedNotes extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Saved Notes',
-                      style: TextStyle(
+                      S.of(context).savedNotesTitle,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -62,10 +63,10 @@ class SavedNotes extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          "No saved notes",
-                          style: TextStyle(
+                          S.of(context).noSavedNotesMessage,
+                          style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

@@ -3,6 +3,7 @@ import '/widgets/camera_preview.dart';
 import '/widgets/camera_controls.dart';
 import '/services/camera_services.dart';
 import '/widgets/background.dart';
+import '/generated/l10n.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -42,11 +43,11 @@ class _CameraPageState extends State<CameraPage> {
       String? imagePath = await _cameraService.captureAndSavePicture();
       if (imagePath != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Picture saved to gallery!')),
+          SnackBar(content: Text(S.of(context).pictureSavedToGallery)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to save picture.')),
+          SnackBar(content: Text(S.of(context).failedToSavePicture)),
         );
       }
       setState(() {});

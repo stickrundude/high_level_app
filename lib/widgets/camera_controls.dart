@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/theme/app_theme.dart';
+import '/generated/l10n.dart';
 
 class CameraControls extends StatelessWidget {
   final VoidCallback onCapturePressed;
@@ -26,14 +27,14 @@ class CameraControls extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildGalleryButton(),
-          _buildCaptureButton(),
+          _buildGalleryButton(context),
+          _buildCaptureButton(context),
         ],
       ),
     );
   }
 
-  ElevatedButton _buildGalleryButton() {
+  ElevatedButton _buildGalleryButton(BuildContext context) {
     return ElevatedButton(
       style: AppTheme.elevatedButtonWithColor(
         isGalleryActive
@@ -41,11 +42,11 @@ class CameraControls extends StatelessWidget {
             : const Color.fromARGB(255, 185, 214, 237),
       ),
       onPressed: onGalleryPressed,
-      child: const Text('Open Gallery'),
+      child: Text(S.of(context).openGallery),
     );
   }
 
-  ElevatedButton _buildCaptureButton() {
+  ElevatedButton _buildCaptureButton(BuildContext context) {
     return ElevatedButton(
       style: AppTheme.elevatedButtonWithColor(
         isCaptureActive
@@ -55,7 +56,7 @@ class CameraControls extends StatelessWidget {
       onPressed: onCapturePressed,
       child: isCaptureActive
           ? const Icon(Icons.camera_alt, size: 30)
-          : const Text('Capture'),
+          : Text(S.of(context).capture),
     );
   }
 }

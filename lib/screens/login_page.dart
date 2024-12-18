@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '/services/firebase_service.dart';
 import '/utils/validators.dart';
 import 'home_page.dart';
@@ -7,6 +8,8 @@ import 'signup_page.dart';
 import '/services/login_services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '/widgets/background.dart';
+import '/main.dart';
+import '/generated/l10n.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,18 +24,32 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final LoginService loginService =
-  LoginService(firebaseServices: FirebaseServices());
+      LoginService(firebaseServices: FirebaseServices());
 
-  bool isLoading = false;
-
+  String _selectedLanguage = 'en';
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    checkIfUserIsLoggedIn();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       playWelcomeAudio();
     });
+  }
+
+  void checkIfUserIsLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TravelMateHomePage(),
+        ),
+      );
+    }
   }
 
   void playWelcomeAudio() {
@@ -46,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (Validators.isEmptyField(email) || Validators.isEmptyField(password)) {
       Fluttertoast.showToast(
-        msg: "Please fill in both email and password!",
+        msg: S.of(context).fillEmailPassword,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
       );
@@ -55,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!Validators.isValidEmail(email)) {
       Fluttertoast.showToast(
-        msg: "Invalid email format. Please enter a valid email.",
+        msg: S.of(context).invalidEmail,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
       );
@@ -72,7 +89,10 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (isSuccess) {
-      Fluttertoast.showToast(msg: 'Login Successful');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
+
+      Fluttertoast.showToast(msg: S.of(context).loginSuccess);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -81,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       Fluttertoast.showToast(
-        msg: "Login failed. Please check your credentials.",
+        msg: S.of(context).loginFailed,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
       );
@@ -97,11 +117,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void changeLanguage(String languageCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', languageCode);
+
+    Locale newLocale = Locale(languageCode, '');
+    MyApp.setLocale(context, newLocale);
+    setState(() {
+      _selectedLanguage = languageCode;
+    });
+  }
+
+  void _setLanguageFromLocale() {
+    Locale currentLocale = Localizations.localeOf(context);
+    setState(() {
+      _selectedLanguage = currentLocale.languageCode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to TravelMate'),
+        title: Text(S.of(context).welcomeToTravelMate),
         centerTitle: true,
       ),
       body: BackgroundWidget(
@@ -125,22 +163,22 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                    labelText: S.of(context).email,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    labelText: S.of(context).password,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -149,13 +187,40 @@ class _LoginPageState extends State<LoginPage> {
                     : ElevatedButton(
                         onPressed: () => loginUser(context),
                         style: Theme.of(context).elevatedButtonTheme.style,
-                        child: const Text('Login'),
+                        child: Text(S.of(context).login),
                       ),
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: navigateToSignUp,
                   style: Theme.of(context).elevatedButtonTheme.style,
-                  child: const Text('Sign Up'),
+                  child: Text(S.of(context).signUp),
+                ),
+                const SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: 200,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButton<String>(
+                      value: _selectedLanguage,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          changeLanguage(newValue);
+                        }
+                      },
+                      items: const [
+                        DropdownMenuItem(value: 'en', child: Text('English')),
+                        DropdownMenuItem(value: 'de', child: Text('Deutsch')),
+                      ],
+                      isExpanded: true,
+                      dropdownColor: Colors.white,
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/generated/l10n.dart';
 
 class CityInfoWidget extends StatelessWidget {
   final String? cityName;
@@ -19,15 +20,15 @@ class CityInfoWidget extends StatelessWidget {
         child: Text.rich(
           TextSpan(
             children: [
-              const TextSpan(
-                text: "Notes are being stored in: ",
-                style: TextStyle(
+              TextSpan(
+                text: S.of(context).notesStoredMessage,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Colors.black),
               ),
               TextSpan(
-                text: cityName ?? "Fetching your city...",
+                text: cityName ?? S.of(context).fetchingCityMessage,
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

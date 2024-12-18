@@ -51,50 +51,10 @@ class S {
   }
 
   /// `Welcome to TravelMate`
-  String get welcome {
+  String get welcomeToTravelMate {
     return Intl.message(
       'Welcome to TravelMate',
-      name: 'welcome',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Login`
-  String get login {
-    return Intl.message(
-      'Login',
-      name: 'login',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sign Up`
-  String get signUp {
-    return Intl.message(
-      'Sign Up',
-      name: 'signUp',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `First Name`
-  String get firstName {
-    return Intl.message(
-      'First Name',
-      name: 'firstName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Last Name`
-  String get lastName {
-    return Intl.message(
-      'Last Name',
-      name: 'lastName',
+      name: 'welcomeToTravelMate',
       desc: '',
       args: [],
     );
@@ -120,40 +80,50 @@ class S {
     );
   }
 
-  /// `Current Password`
-  String get currentPassword {
+  /// `Login`
+  String get login {
     return Intl.message(
-      'Current Password',
-      name: 'currentPassword',
+      'Login',
+      name: 'login',
       desc: '',
       args: [],
     );
   }
 
-  /// `Change Password`
-  String get changePassword {
+  /// `Sign Up`
+  String get signUp {
     return Intl.message(
-      'Change Password',
-      name: 'changePassword',
+      'Sign Up',
+      name: 'signUp',
       desc: '',
       args: [],
     );
   }
 
-  /// `Repeat Password`
-  String get repeatPassword {
+  /// `Please fill in email and password.`
+  String get fillEmailPassword {
     return Intl.message(
-      'Repeat Password',
-      name: 'repeatPassword',
+      'Please fill in email and password.',
+      name: 'fillEmailPassword',
       desc: '',
       args: [],
     );
   }
 
-  /// `Login Successful`
+  /// `Invalid email format.`
+  String get invalidEmail {
+    return Intl.message(
+      'Invalid email format.',
+      name: 'invalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login successful.`
   String get loginSuccess {
     return Intl.message(
-      'Login Successful',
+      'Login successful.',
       name: 'loginSuccess',
       desc: '',
       args: [],
@@ -170,46 +140,6 @@ class S {
     );
   }
 
-  /// `Sign-up failed. Please try again.`
-  String get signupFailed {
-    return Intl.message(
-      'Sign-up failed. Please try again.',
-      name: 'signupFailed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sign-up successful!`
-  String get signupSuccess {
-    return Intl.message(
-      'Sign-up successful!',
-      name: 'signupSuccess',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Save`
-  String get save {
-    return Intl.message(
-      'Save',
-      name: 'save',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Language`
-  String get language {
-    return Intl.message(
-      'Language',
-      name: 'language',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -220,11 +150,511 @@ class S {
     );
   }
 
+  /// `Personal Information`
+  String get personalInformation {
+    return Intl.message(
+      'Personal Information',
+      name: 'personalInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get changePassword {
+    return Intl.message(
+      'Change Password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name`
+  String get firstName {
+    return Intl.message(
+      'First Name',
+      name: 'firstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get lastName {
+    return Intl.message(
+      'Last Name',
+      name: 'lastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Password`
+  String get currentPassword {
+    return Intl.message(
+      'Current Password',
+      name: 'currentPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get newPassword {
+    return Intl.message(
+      'New Password',
+      name: 'newPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Repeat New Password`
+  String get repeatNewPassword {
+    return Intl.message(
+      'Repeat New Password',
+      name: 'repeatNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Personal Information`
+  String get savePersonalInfo {
+    return Intl.message(
+      'Save Personal Information',
+      name: 'savePersonalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Password`
+  String get savePassword {
+    return Intl.message(
+      'Update Password',
+      name: 'savePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Logout`
   String get logout {
     return Intl.message(
       'Logout',
       name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match!`
+  String get passwordsDoNotMatch {
+    return Intl.message(
+      'Passwords do not match!',
+      name: 'passwordsDoNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal information updated!`
+  String get personalInfoUpdated {
+    return Intl.message(
+      'Personal information updated!',
+      name: 'personalInfoUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password updated successfully!`
+  String get passwordUpdated {
+    return Intl.message(
+      'Password updated successfully!',
+      name: 'passwordUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Info`
+  String get personalInfo {
+    return Intl.message(
+      'Personal Info',
+      name: 'personalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Password`
+  String get updatePassword {
+    return Intl.message(
+      'Update Password',
+      name: 'updatePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logged in as`
+  String get loggedInAs {
+    return Intl.message(
+      'Logged in as',
+      name: 'loggedInAs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note is empty. Please write something.`
+  String get noteEmptyMessage {
+    return Intl.message(
+      'Note is empty. Please write something.',
+      name: 'noteEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note saved successfully!`
+  String get noteSavedMessage {
+    return Intl.message(
+      'Note saved successfully!',
+      name: 'noteSavedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error: Note ID is null`
+  String get noteErrorMessage {
+    return Intl.message(
+      'Error: Note ID is null',
+      name: 'noteErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note deleted!`
+  String get noteDeletedMessage {
+    return Intl.message(
+      'Note deleted!',
+      name: 'noteDeletedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error deleting note from Firestore`
+  String get errorDeletingNoteMessage {
+    return Intl.message(
+      'Error deleting note from Firestore',
+      name: 'errorDeletingNoteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Note`
+  String get saveNote {
+    return Intl.message(
+      'Save Note',
+      name: 'saveNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Saved Notes`
+  String get viewSavedNotes {
+    return Intl.message(
+      'View Saved Notes',
+      name: 'viewSavedNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes are being stored in: `
+  String get notesStoredMessage {
+    return Intl.message(
+      'Notes are being stored in: ',
+      name: 'notesStoredMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fetching your city...`
+  String get fetchingCityMessage {
+    return Intl.message(
+      'Fetching your city...',
+      name: 'fetchingCityMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saved Notes`
+  String get savedNotesTitle {
+    return Intl.message(
+      'Saved Notes',
+      name: 'savedNotesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Saved Notes`
+  String get noSavedNotesMessage {
+    return Intl.message(
+      'No Saved Notes',
+      name: 'noSavedNotesMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open Gallery`
+  String get openGallery {
+    return Intl.message(
+      'Open Gallery',
+      name: 'openGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capture`
+  String get capture {
+    return Intl.message(
+      'Capture',
+      name: 'capture',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Picture saved to gallery!`
+  String get pictureSavedToGallery {
+    return Intl.message(
+      'Picture saved to gallery!',
+      name: 'pictureSavedToGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save picture.`
+  String get failedToSavePicture {
+    return Intl.message(
+      'Failed to save picture.',
+      name: 'failedToSavePicture',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Map`
+  String get map {
+    return Intl.message(
+      'Map',
+      name: 'map',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get camera {
+    return Intl.message(
+      'Camera',
+      name: 'camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Page`
+  String get paymentPageTitle {
+    return Intl.message(
+      'Payment Page',
+      name: 'paymentPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fill out the fields below to complete your payment`
+  String get fillOutFieldsToCompletePayment {
+    return Intl.message(
+      'Fill out the fields below to complete your payment',
+      name: 'fillOutFieldsToCompletePayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card Number`
+  String get cardNumber {
+    return Intl.message(
+      'Card Number',
+      name: 'cardNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiry Date (MM/YY)`
+  String get expiryDate {
+    return Intl.message(
+      'Expiry Date (MM/YY)',
+      name: 'expiryDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CVV`
+  String get cvv {
+    return Intl.message(
+      'CVV',
+      name: 'cvv',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay`
+  String get pay {
+    return Intl.message(
+      'Pay',
+      name: 'pay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment successful! Returning to Notes.`
+  String get paymentSuccessfulMessage {
+    return Intl.message(
+      'Payment successful! Returning to Notes.',
+      name: 'paymentSuccessfulMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upgrade Required`
+  String get upgradeRequiredTitle {
+    return Intl.message(
+      'Upgrade Required',
+      name: 'upgradeRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have reached the free limit of 5 notes. To save more, please upgrade.`
+  String get upgradeRequiredMessage {
+    return Intl.message(
+      'You have reached the free limit of 5 notes. To save more, please upgrade.',
+      name: 'upgradeRequiredMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Deletion`
+  String get confirmDeletionTitle {
+    return Intl.message(
+      'Confirm Deletion',
+      name: 'confirmDeletionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this note?`
+  String get confirmDeletionMessage {
+    return Intl.message(
+      'Are you sure you want to delete this note?',
+      name: 'confirmDeletionMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action completed!`
+  String get toastMessage {
+    return Intl.message(
+      'Action completed!',
+      name: 'toastMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Logout`
+  String get confirmLogout {
+    return Intl.message(
+      'Confirm Logout',
+      name: 'confirmLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to logout?`
+  String get areYouSureYouWantToLogout {
+    return Intl.message(
+      'Are you sure you want to logout?',
+      name: 'areYouSureYouWantToLogout',
       desc: '',
       args: [],
     );

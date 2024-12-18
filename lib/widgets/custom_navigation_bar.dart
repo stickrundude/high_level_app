@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/generated/l10n.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final int selectedIndex;
@@ -13,22 +14,22 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.map),
-          label: 'Map',
+          icon: const Icon(Icons.map),
+          label: S.of(context).map,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.camera),
-          label: 'Camera',
+          icon: const Icon(Icons.camera),
+          label: S.of(context).camera,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notes),
-          label: 'Notes',
+          icon: const Icon(Icons.notes),
+          label: S.of(context).notes,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: const Icon(Icons.settings),
+          label: S.of(context).settings,
         ),
       ],
       currentIndex: selectedIndex,
