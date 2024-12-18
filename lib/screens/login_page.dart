@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       playWelcomeAudio();
     });
+    _setLanguageFromLocale();
   }
 
   void checkIfUserIsLoggedIn() async {
@@ -83,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    bool isSuccess = await loginService.loginUser(email, password);
+    bool isSuccess = await loginService.loginUser(context, email, password);
     setState(() {
       isLoading = false;
     });
@@ -128,11 +129,15 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _setLanguageFromLocale() {
-    Locale currentLocale = Localizations.localeOf(context);
+  void _setLanguageFromLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String languageCode = prefs.getString('language_code') ?? 'en';
     setState(() {
-      _selectedLanguage = currentLocale.languageCode;
+      _selectedLanguage = languageCode;
     });
+
+    Locale newLocale = Locale(languageCode, '');
+    MyApp.setLocale(context, newLocale);
   }
 
   @override

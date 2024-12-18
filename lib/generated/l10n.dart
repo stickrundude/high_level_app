@@ -100,10 +100,10 @@ class S {
     );
   }
 
-  /// `Please fill in email and password.`
+  /// `Please enter your email and password.`
   String get fillEmailPassword {
     return Intl.message(
-      'Please fill in email and password.',
+      'Please enter your email and password.',
       name: 'fillEmailPassword',
       desc: '',
       args: [],
@@ -310,10 +310,10 @@ class S {
     );
   }
 
-  /// `Note is empty. Please write something.`
+  /// `The note is empty. Please write something.`
   String get noteEmptyMessage {
     return Intl.message(
-      'Note is empty. Please write something.',
+      'The note is empty. Please write something.',
       name: 'noteEmptyMessage',
       desc: '',
       args: [],
@@ -390,10 +390,10 @@ class S {
     );
   }
 
-  /// `Fetching your city...`
+  /// `Fetching city...`
   String get fetchingCityMessage {
     return Intl.message(
-      'Fetching your city...',
+      'Fetching city...',
       name: 'fetchingCityMessage',
       desc: '',
       args: [],
@@ -410,10 +410,10 @@ class S {
     );
   }
 
-  /// `No Saved Notes`
+  /// `No saved notes`
   String get noSavedNotesMessage {
     return Intl.message(
-      'No Saved Notes',
+      'No saved notes',
       name: 'noSavedNotesMessage',
       desc: '',
       args: [],
@@ -540,16 +540,6 @@ class S {
     );
   }
 
-  /// `Pay`
-  String get pay {
-    return Intl.message(
-      'Pay',
-      name: 'pay',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Payment successful! Returning to Notes.`
   String get paymentSuccessfulMessage {
     return Intl.message(
@@ -575,16 +565,6 @@ class S {
     return Intl.message(
       'You have reached the free limit of 5 notes. To save more, please upgrade.',
       name: 'upgradeRequiredMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cancel`
-  String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
       desc: '',
       args: [],
     );
@@ -660,21 +640,151 @@ class S {
     );
   }
 
-  /// `Search places...`
-  String get searchPlaceholder {
+  /// `Sign Up`
+  String get appTitle {
     return Intl.message(
-      'Search places...',
-      name: 'searchPlaceholder',
+      'Sign Up',
+      name: 'appTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `No places found for the query.`
-  String get noPlacesFound {
+  /// `First Name`
+  String get firstNameLabel {
     return Intl.message(
-      'No places found for the query.',
-      name: 'noPlacesFound',
+      'First Name',
+      name: 'firstNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get lastNameLabel {
+    return Intl.message(
+      'Last Name',
+      name: 'lastNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get emailLabel {
+    return Intl.message(
+      'Email',
+      name: 'emailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get passwordLabel {
+    return Intl.message(
+      'Password',
+      name: 'passwordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get signUpButton {
+    return Intl.message(
+      'Sign Up',
+      name: 'signUpButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First name should only contain letters and cannot be empty.`
+  String get firstNameError {
+    return Intl.message(
+      'First name should only contain letters and cannot be empty.',
+      name: 'firstNameError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last name should only contain letters and cannot be empty.`
+  String get lastNameError {
+    return Intl.message(
+      'Last name should only contain letters and cannot be empty.',
+      name: 'lastNameError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid email address.`
+  String get emailError {
+    return Intl.message(
+      'Please enter a valid email address.',
+      name: 'emailError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 6 characters long and contain both letters and numbers.`
+  String get passwordError {
+    return Intl.message(
+      'Password must be at least 6 characters long and contain both letters and numbers.',
+      name: 'passwordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up successful! Please log in.`
+  String get signUpSuccess {
+    return Intl.message(
+      'Sign up successful! Please log in.',
+      name: 'signUpSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up failed. Please try again.`
+  String get signUpFailure {
+    return Intl.message(
+      'Sign up failed. Please try again.',
+      name: 'signUpFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error during sign up: {error}`
+  String signUpError(Object error) {
+    return Intl.message(
+      'Error during sign up: $error',
+      name: 'signUpError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Login failed: {error}`
+  String loginError(Object error) {
+    return Intl.message(
+      'Login failed: $error',
+      name: 'loginError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
       desc: '',
       args: [],
     );

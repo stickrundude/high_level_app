@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
+import '/services/firebase_service.dart';
 import '/screens/login_page.dart';
 import '/generated/l10n.dart';
 import '/theme/app_theme.dart';
@@ -22,7 +22,7 @@ void main() async {
   }
 
   // Initialize Firebase
-  await Firebase.initializeApp();
+  await FirebaseServices.initializeFirebase();
 
   // Get the user's preferred language
   SharedPreferences prefs = await SharedPreferences.getInstance();

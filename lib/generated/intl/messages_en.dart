@@ -20,8 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(error) => "Login failed: ${error}";
+
+  static String m1(error) => "Error during sign up: ${error}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appTitle": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "areYouSureYouWantToLogout": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to logout?"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
@@ -39,6 +44,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Current Password"),
         "cvv": MessageLookupByLibrary.simpleMessage("CVV"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailError": MessageLookupByLibrary.simpleMessage(
+            "Please enter a valid email address."),
+        "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
         "errorDeletingNoteMessage": MessageLookupByLibrary.simpleMessage(
             "Error deleting note from Firestore"),
         "expiryDate":
@@ -46,17 +54,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedToSavePicture":
             MessageLookupByLibrary.simpleMessage("Failed to save picture."),
         "fetchingCityMessage":
-            MessageLookupByLibrary.simpleMessage("Fetching your city..."),
+            MessageLookupByLibrary.simpleMessage("Fetching city..."),
         "fillEmailPassword": MessageLookupByLibrary.simpleMessage(
-            "Please fill in email and password."),
+            "Please enter your email and password."),
         "fillOutFieldsToCompletePayment": MessageLookupByLibrary.simpleMessage(
             "Fill out the fields below to complete your payment"),
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "firstNameError": MessageLookupByLibrary.simpleMessage(
+            "First name should only contain letters and cannot be empty."),
+        "firstNameLabel": MessageLookupByLibrary.simpleMessage("First Name"),
         "invalidEmail":
             MessageLookupByLibrary.simpleMessage("Invalid email format."),
         "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+        "lastNameError": MessageLookupByLibrary.simpleMessage(
+            "Last name should only contain letters and cannot be empty."),
+        "lastNameLabel": MessageLookupByLibrary.simpleMessage("Last Name"),
         "loggedInAs": MessageLookupByLibrary.simpleMessage("Logged in as"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "loginError": m0,
         "loginFailed": MessageLookupByLibrary.simpleMessage(
             "Login failed. Please check your credentials."),
         "loginSuccess":
@@ -65,14 +80,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
-        "noPlacesFound": MessageLookupByLibrary.simpleMessage(
-            "No places found for the query."),
         "noSavedNotesMessage":
-            MessageLookupByLibrary.simpleMessage("No Saved Notes"),
+            MessageLookupByLibrary.simpleMessage("No saved notes"),
         "noteDeletedMessage":
             MessageLookupByLibrary.simpleMessage("Note deleted!"),
         "noteEmptyMessage": MessageLookupByLibrary.simpleMessage(
-            "Note is empty. Please write something."),
+            "The note is empty. Please write something."),
         "noteErrorMessage":
             MessageLookupByLibrary.simpleMessage("Error: Note ID is null"),
         "noteSavedMessage":
@@ -82,11 +95,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Notes are being stored in: "),
         "openGallery": MessageLookupByLibrary.simpleMessage("Open Gallery"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "passwordError": MessageLookupByLibrary.simpleMessage(
+            "Password must be at least 6 characters long and contain both letters and numbers."),
+        "passwordLabel": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordUpdated": MessageLookupByLibrary.simpleMessage(
             "Password updated successfully!"),
         "passwordsDoNotMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match!"),
-        "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "paymentPageTitle":
             MessageLookupByLibrary.simpleMessage("Payment Page"),
         "paymentSuccessfulMessage": MessageLookupByLibrary.simpleMessage(
@@ -105,10 +120,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "savePersonalInfo":
             MessageLookupByLibrary.simpleMessage("Save Personal Information"),
         "savedNotesTitle": MessageLookupByLibrary.simpleMessage("Saved Notes"),
-        "searchPlaceholder":
-            MessageLookupByLibrary.simpleMessage("Search places..."),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "signUpButton": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "signUpError": m1,
+        "signUpFailure": MessageLookupByLibrary.simpleMessage(
+            "Sign up failed. Please try again."),
+        "signUpSuccess": MessageLookupByLibrary.simpleMessage(
+            "Sign up successful! Please log in."),
         "toastMessage":
             MessageLookupByLibrary.simpleMessage("Action completed!"),
         "updatePassword":
