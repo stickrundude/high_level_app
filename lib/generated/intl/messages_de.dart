@@ -20,8 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
+  static String m0(error) => "Fehler bei der Anmeldung: ${error}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appTitle": MessageLookupByLibrary.simpleMessage("Anmelden"),
         "areYouSureYouWantToLogout": MessageLookupByLibrary.simpleMessage(
             "Möchten Sie sich wirklich abmelden?"),
         "camera": MessageLookupByLibrary.simpleMessage("Kamera"),
@@ -40,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aktuelles Passwort"),
         "cvv": MessageLookupByLibrary.simpleMessage("CVV"),
         "email": MessageLookupByLibrary.simpleMessage("E-Mail"),
+        "emailError": MessageLookupByLibrary.simpleMessage(
+            "Bitte geben Sie eine gültige E-Mail-Adresse ein."),
+        "emailLabel": MessageLookupByLibrary.simpleMessage("E-Mail"),
         "errorDeletingNoteMessage": MessageLookupByLibrary.simpleMessage(
             "Fehler beim Löschen der Notiz aus Firestore"),
         "expiryDate":
@@ -53,9 +59,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "fillOutFieldsToCompletePayment": MessageLookupByLibrary.simpleMessage(
             "Füllen Sie die untenstehenden Felder aus, um Ihre Zahlung abzuschließen"),
         "firstName": MessageLookupByLibrary.simpleMessage("Vorname"),
+        "firstNameError": MessageLookupByLibrary.simpleMessage(
+            "Der Vorname darf nur Buchstaben enthalten und nicht leer sein."),
+        "firstNameLabel": MessageLookupByLibrary.simpleMessage("Vorname"),
         "invalidEmail":
             MessageLookupByLibrary.simpleMessage("Ungültiges E-Mail-Format."),
         "lastName": MessageLookupByLibrary.simpleMessage("Nachname"),
+        "lastNameError": MessageLookupByLibrary.simpleMessage(
+            "Der Nachname darf nur Buchstaben enthalten und nicht leer sein."),
+        "lastNameLabel": MessageLookupByLibrary.simpleMessage("Nachname"),
         "loggedInAs": MessageLookupByLibrary.simpleMessage("Angemeldet als"),
         "login": MessageLookupByLibrary.simpleMessage("Anmelden"),
         "loginFailed": MessageLookupByLibrary.simpleMessage(
@@ -81,6 +93,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Notizen werden gespeichert in: "),
         "openGallery": MessageLookupByLibrary.simpleMessage("Galerie öffnen"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
+        "passwordError": MessageLookupByLibrary.simpleMessage(
+            "Das Passwort muss mindestens 6 Zeichen lang sein und Buchstaben und Zahlen enthalten."),
+        "passwordLabel": MessageLookupByLibrary.simpleMessage("Passwort"),
         "passwordUpdated": MessageLookupByLibrary.simpleMessage(
             "Passwort erfolgreich aktualisiert!"),
         "passwordsDoNotMatch": MessageLookupByLibrary.simpleMessage(
@@ -109,6 +124,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gespeicherte Notizen"),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
+        "signUpButton": MessageLookupByLibrary.simpleMessage("Anmelden"),
+        "signUpError": m0,
+        "signUpFailure": MessageLookupByLibrary.simpleMessage(
+            "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."),
+        "signUpSuccess": MessageLookupByLibrary.simpleMessage(
+            "Anmeldung erfolgreich! Bitte melden Sie sich an."),
         "toastMessage":
             MessageLookupByLibrary.simpleMessage("Aktion abgeschlossen!"),
         "updatePassword":

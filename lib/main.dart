@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
+import '/services/firebase_service.dart';
 import '/screens/login_page.dart';
 import '/generated/l10n.dart';
 import '/theme/app_theme.dart';
@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await FirebaseServices.initializeFirebase();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String languageCode = prefs.getString('language_code') ?? 'en';

@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '/services/signup_services.dart';
 import '/utils/validators.dart';
 import '/widgets/background.dart';
+import '/generated/l10n.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -29,26 +30,22 @@ class _SignUpPageState extends State<SignUpPage> {
     final String lastName = lastNameController.text.trim();
 
     if (!Validators.isValidName(firstName)) {
-      Fluttertoast.showToast(
-          msg: "First Name must only contain letters and cannot be empty.");
+      Fluttertoast.showToast(msg: S.of(context).firstNameError);
       return;
     }
 
     if (!Validators.isValidName(lastName)) {
-      Fluttertoast.showToast(
-          msg: "Last Name must only contain letters and cannot be empty.");
+      Fluttertoast.showToast(msg: S.of(context).lastNameError);
       return;
     }
 
     if (!Validators.isValidEmail(email)) {
-      Fluttertoast.showToast(msg: "Please enter a valid email.");
+      Fluttertoast.showToast(msg: S.of(context).emailError);
       return;
     }
 
     if (!Validators.isValidPassword(password)) {
-      Fluttertoast.showToast(
-          msg:
-              "Password should be at least 6 characters and contain both letters and numbers.");
+      Fluttertoast.showToast(msg: S.of(context).passwordError);
       return;
     }
 
@@ -69,16 +66,18 @@ class _SignUpPageState extends State<SignUpPage> {
       });
 
       if (isSuccess) {
-        Fluttertoast.showToast(msg: "Sign-up successful! Please log in.");
+        Fluttertoast.showToast(msg: S.of(context).signUpSuccess);
         Navigator.pop(context);
       } else {
-        Fluttertoast.showToast(msg: "Sign-up failed. Please try again.");
+        Fluttertoast.showToast(msg: S.of(context).signUpFailure);
       }
     } catch (e) {
       setState(() {
         isLoading = false;
       });
-      Fluttertoast.showToast(msg: "Error during sign-up: $e");
+      Fluttertoast.showToast(
+        msg: S.of(context).signUpError(e.toString()),
+      );
     }
   }
 
@@ -86,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: Text(S.of(context).appTitle),
         centerTitle: true,
       ),
       body: BackgroundWidget(
@@ -100,31 +99,31 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 200),
                 TextField(
                   controller: firstNameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'First Name',
-                    border: OutlineInputBorder(),
+                    labelText: S.of(context).firstNameLabel,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: lastNameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'Last Name',
-                    border: OutlineInputBorder(),
+                    labelText: S.of(context).lastNameLabel,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                    labelText: S.of(context).emailLabel,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -134,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: 'Password',
+                    labelText: S.of(context).passwordLabel,
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -155,8 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ? const Center(child: CircularProgressIndicator())
                     : ElevatedButton(
                         onPressed: () => signUp(context),
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        child: const Text('Sign Up'),
+                        child: Text(S.of(context).signUpButton),
                       ),
               ],
             ),

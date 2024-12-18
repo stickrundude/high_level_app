@@ -62,5 +62,19 @@
   "yes": "Yes",
   "toastMessage": "Action completed!",
   "confirmLogout": "Confirm Logout",
-  "areYouSureYouWantToLogout": "Are you sure you want to logout?"
+  "areYouSureYouWantToLogout": "Are you sure you want to logout?",
+  "appTitle": "Sign Up",
+  "firstNameLabel": "First Name",
+  "lastNameLabel": "Last Name",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "signUpButton": "Sign Up",
+  "firstNameError": "First Name must only contain letters and cannot be empty.",
+  "lastNameError": "Last Name must only contain letters and cannot be empty.",
+  "emailError": "Please enter a valid email.",
+  "passwordError": "Password should be at least 6 characters and contain both letters and numbers.",
+  "signUpSuccess": "Sign-up successful! Please log in.",
+  "signUpFailure": "Sign-up failed. Please try again.",
+  "signUpError": "Error during sign-up: {error}",
+  "loginError": "Login failed: {error}."
 }

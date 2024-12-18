@@ -32,19 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     _loadUserData();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _setLanguageFromLocale();
-  }
-
-  void _setLanguageFromLocale() {
-    Locale currentLocale = Localizations.localeOf(context);
-    setState(() {
-      _selectedLanguage = currentLocale.languageCode;
-    });
+    _loadLanguagePreference();
   }
 
   Future<void> _loadUserData() async {
@@ -59,6 +47,16 @@ class _SettingsPageState extends State<SettingsPage> {
         });
       }
     }
+  }
+
+  Future<void> _loadLanguagePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedLanguage = prefs.getString('language_code') ?? 'en';
+    setState(() {
+      _selectedLanguage = savedLanguage;
+    });
+    Locale newLocale = Locale(savedLanguage, '');
+    MyApp.setLocale(context, newLocale);
   }
 
   void savePersonalInfo() async {
@@ -143,9 +141,12 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     if (confirmLogout == true) {
-      await SharedPreferences.getInstance().then((prefs) {
-        prefs.clear();
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String languageCode = prefs.getString('language_code') ?? 'en';
+      await prefs.clear();
+
+      await prefs.setString('language_code', languageCode);
+
       await FirebaseAuth.instance.signOut();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const LoginPage()));

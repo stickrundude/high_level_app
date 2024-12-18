@@ -659,6 +659,146 @@ class S {
       args: [],
     );
   }
+
+  /// `Sign Up`
+  String get appTitle {
+    return Intl.message(
+      'Sign Up',
+      name: 'appTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name`
+  String get firstNameLabel {
+    return Intl.message(
+      'First Name',
+      name: 'firstNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get lastNameLabel {
+    return Intl.message(
+      'Last Name',
+      name: 'lastNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get emailLabel {
+    return Intl.message(
+      'Email',
+      name: 'emailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get passwordLabel {
+    return Intl.message(
+      'Password',
+      name: 'passwordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get signUpButton {
+    return Intl.message(
+      'Sign Up',
+      name: 'signUpButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name must only contain letters and cannot be empty.`
+  String get firstNameError {
+    return Intl.message(
+      'First Name must only contain letters and cannot be empty.',
+      name: 'firstNameError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name must only contain letters and cannot be empty.`
+  String get lastNameError {
+    return Intl.message(
+      'Last Name must only contain letters and cannot be empty.',
+      name: 'lastNameError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid email.`
+  String get emailError {
+    return Intl.message(
+      'Please enter a valid email.',
+      name: 'emailError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password should be at least 6 characters and contain both letters and numbers.`
+  String get passwordError {
+    return Intl.message(
+      'Password should be at least 6 characters and contain both letters and numbers.',
+      name: 'passwordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign-up successful! Please log in.`
+  String get signUpSuccess {
+    return Intl.message(
+      'Sign-up successful! Please log in.',
+      name: 'signUpSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign-up failed. Please try again.`
+  String get signUpFailure {
+    return Intl.message(
+      'Sign-up failed. Please try again.',
+      name: 'signUpFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error during sign-up: {error}`
+  String signUpError(Object error) {
+    return Intl.message(
+      'Error during sign-up: $error',
+      name: 'signUpError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Login failed: {error}.`
+  String loginError(Object error) {
+    return Intl.message(
+      'Login failed: $error.',
+      name: 'loginError',
+      desc: '',
+      args: [error],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
