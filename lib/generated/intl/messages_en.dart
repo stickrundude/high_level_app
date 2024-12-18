@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noPlacesFound": MessageLookupByLibrary.simpleMessage(
+            "No places found for the query."),
         "noSavedNotesMessage":
             MessageLookupByLibrary.simpleMessage("No Saved Notes"),
         "noteDeletedMessage":
@@ -103,6 +105,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "savePersonalInfo":
             MessageLookupByLibrary.simpleMessage("Save Personal Information"),
         "savedNotesTitle": MessageLookupByLibrary.simpleMessage("Saved Notes"),
+        "searchPlaceholder":
+            MessageLookupByLibrary.simpleMessage("Search places..."),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "toastMessage":

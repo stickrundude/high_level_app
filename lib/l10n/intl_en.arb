@@ -41,11 +41,10 @@
   "capture": "Capture",
   "pictureSavedToGallery": "Picture saved to gallery!",
   "failedToSavePicture": "Failed to save picture.",
-   "map": "Map",
+  "map": "Map",
   "camera": "Camera",
   "notes": "Notes",
-  "settings": "Settings",
-   "paymentPageTitle": "Payment Page",
+  "paymentPageTitle": "Payment Page",
   "fillOutFieldsToCompletePayment": "Fill out the fields below to complete your payment",
   "cardNumber": "Card Number",
   "expiryDate": "Expiry Date (MM/YY)",
@@ -62,5 +61,7 @@
   "yes": "Yes",
   "toastMessage": "Action completed!",
   "confirmLogout": "Confirm Logout",
-  "areYouSureYouWantToLogout": "Are you sure you want to logout?"
+  "areYouSureYouWantToLogout": "Are you sure you want to logout?",
+  "searchPlaceholder": "Search places...",
+  "noPlacesFound": "No places found for the query."
 }

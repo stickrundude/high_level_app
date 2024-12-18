@@ -659,6 +659,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Search places...`
+  String get searchPlaceholder {
+    return Intl.message(
+      'Search places...',
+      name: 'searchPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No places found for the query.`
+  String get noPlacesFound {
+    return Intl.message(
+      'No places found for the query.',
+      name: 'noPlacesFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

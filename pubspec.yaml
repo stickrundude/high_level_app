@@ -19,8 +19,10 @@ dependencies:
   camera: ^0.11.0+2
   image_gallery_saver: ^2.0.3
   path_provider: ^2.1.5
+  http: ^1.2.2
   audioplayers: ^6.1.0
   google_maps_flutter: ^2.10.0
+  google_places_flutter: ^2.0.9
   geolocator: ^13.0.2
   geocoding: ^3.0.0
   flutter_quill: ^10.8.5
@@ -49,5 +51,6 @@ flutter:
      - assets/images/image.jpg
      - assets/images/logo.png
      - lib/l10n/
+     - .env
 
 

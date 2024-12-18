@@ -5,15 +5,30 @@ import '/screens/login_page.dart';
 import '/generated/l10n.dart';
 import '/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Load environment variables from the .env file
+  await dotenv.load();  // This loads your .env file.
+
+  // If you want to verify the environment variable is loaded
+  String? apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
+  if (apiKey == null) {
+    print("Error: GOOGLE_MAPS_API_KEY not found in .env file.");
+  } else {
+    print("Loaded Google Maps API Key: $apiKey");
+  }
+
+  // Initialize Firebase
   await Firebase.initializeApp();
 
+  // Get the user's preferred language
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String languageCode = prefs.getString('language_code') ?? 'en';
 
+  // Run the app
   runApp(MyApp(languageCode: languageCode));
 }
 

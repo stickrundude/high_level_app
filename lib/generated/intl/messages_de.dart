@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "areYouSureYouWantToLogout": MessageLookupByLibrary.simpleMessage(
-            "Möchten Sie sich wirklich abmelden?"),
+            "Sind Sie sicher, dass Sie sich abmelden möchten?"),
         "camera": MessageLookupByLibrary.simpleMessage("Kamera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "capture": MessageLookupByLibrary.simpleMessage("Aufnehmen"),
@@ -31,11 +31,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Passwort ändern"),
         "confirmDeletionMessage": MessageLookupByLibrary.simpleMessage(
-            "Möchten Sie diese Notiz wirklich löschen?"),
+            "Sind Sie sicher, dass Sie diese Notiz löschen möchten?"),
         "confirmDeletionTitle":
-            MessageLookupByLibrary.simpleMessage("Löschbestätigung"),
+            MessageLookupByLibrary.simpleMessage("Löschung bestätigen"),
         "confirmLogout":
-            MessageLookupByLibrary.simpleMessage("Abmelden bestätigen"),
+            MessageLookupByLibrary.simpleMessage("Abmeldung bestätigen"),
         "currentPassword":
             MessageLookupByLibrary.simpleMessage("Aktuelles Passwort"),
         "cvv": MessageLookupByLibrary.simpleMessage("CVV"),
@@ -45,27 +45,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiryDate":
             MessageLookupByLibrary.simpleMessage("Ablaufdatum (MM/JJ)"),
         "failedToSavePicture": MessageLookupByLibrary.simpleMessage(
-            "Fehler beim Speichern des Bildes."),
+            "Bild konnte nicht gespeichert werden."),
         "fetchingCityMessage":
             MessageLookupByLibrary.simpleMessage("Stadt wird abgerufen..."),
         "fillEmailPassword": MessageLookupByLibrary.simpleMessage(
-            "Bitte E-Mail und Passwort ausfüllen."),
+            "Bitte geben Sie E-Mail und Passwort ein."),
         "fillOutFieldsToCompletePayment": MessageLookupByLibrary.simpleMessage(
-            "Füllen Sie die untenstehenden Felder aus, um Ihre Zahlung abzuschließen"),
+            "Füllen Sie die folgenden Felder aus, um Ihre Zahlung abzuschließen"),
         "firstName": MessageLookupByLibrary.simpleMessage("Vorname"),
         "invalidEmail":
             MessageLookupByLibrary.simpleMessage("Ungültiges E-Mail-Format."),
         "lastName": MessageLookupByLibrary.simpleMessage("Nachname"),
-        "loggedInAs": MessageLookupByLibrary.simpleMessage("Angemeldet als"),
+        "loggedInAs": MessageLookupByLibrary.simpleMessage("Eingeloggt als"),
         "login": MessageLookupByLibrary.simpleMessage("Anmelden"),
         "loginFailed": MessageLookupByLibrary.simpleMessage(
-            "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Zugangsdaten."),
+            "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldedaten."),
         "loginSuccess":
-            MessageLookupByLibrary.simpleMessage("Anmeldung erfolgreich."),
+            MessageLookupByLibrary.simpleMessage("Erfolgreich angemeldet."),
         "logout": MessageLookupByLibrary.simpleMessage("Abmelden"),
         "map": MessageLookupByLibrary.simpleMessage("Karte"),
         "newPassword": MessageLookupByLibrary.simpleMessage("Neues Passwort"),
         "no": MessageLookupByLibrary.simpleMessage("Nein"),
+        "noPlacesFound": MessageLookupByLibrary.simpleMessage(
+            "Keine Orte für die Anfrage gefunden."),
         "noSavedNotesMessage":
             MessageLookupByLibrary.simpleMessage("Keine gespeicherten Notizen"),
         "noteDeletedMessage":
@@ -97,7 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "personalInformation":
             MessageLookupByLibrary.simpleMessage("Persönliche Informationen"),
         "pictureSavedToGallery": MessageLookupByLibrary.simpleMessage(
-            "Bild in Galerie gespeichert!"),
+            "Bild in der Galerie gespeichert!"),
         "repeatNewPassword":
             MessageLookupByLibrary.simpleMessage("Neues Passwort wiederholen"),
         "saveNote": MessageLookupByLibrary.simpleMessage("Notiz speichern"),
@@ -107,6 +109,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Persönliche Informationen speichern"),
         "savedNotesTitle":
             MessageLookupByLibrary.simpleMessage("Gespeicherte Notizen"),
+        "searchPlaceholder":
+            MessageLookupByLibrary.simpleMessage("Orte suchen..."),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "toastMessage":
@@ -114,7 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updatePassword":
             MessageLookupByLibrary.simpleMessage("Passwort aktualisieren"),
         "upgradeRequiredMessage": MessageLookupByLibrary.simpleMessage(
-            "Sie haben das kostenlose Limit von 5 Notizen erreicht. Um mehr zu speichern, bitte upgraden."),
+            "Sie haben das kostenlose Limit von 5 Notizen erreicht. Um mehr zu speichern, müssen Sie ein Upgrade durchführen."),
         "upgradeRequiredTitle":
             MessageLookupByLibrary.simpleMessage("Upgrade erforderlich"),
         "viewSavedNotes": MessageLookupByLibrary.simpleMessage(
