@@ -73,5 +73,8 @@
   "signUpFailure": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
   "signUpError": "Fehler bei der Anmeldung: {error}",
   "loginError": "Anmeldung fehlgeschlagen: {error}",
-  "cancel": "Abbrechen"
+  "cancel": "Abbrechen",
+  "noPlacesFound": "Keine Orte gefunden",
+  "pay": "Bezahlen",
+  "searchPlaceholder": "Nach Orten suchen ..."
 }

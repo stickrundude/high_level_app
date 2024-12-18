@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "map": MessageLookupByLibrary.simpleMessage("Karte"),
         "newPassword": MessageLookupByLibrary.simpleMessage("Neues Passwort"),
         "no": MessageLookupByLibrary.simpleMessage("Nein"),
+        "noPlacesFound":
+            MessageLookupByLibrary.simpleMessage("Keine Orte gefunden"),
         "noSavedNotesMessage":
             MessageLookupByLibrary.simpleMessage("Keine gespeicherten Notizen"),
         "noteDeletedMessage":
@@ -103,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Passwort erfolgreich aktualisiert!"),
         "passwordsDoNotMatch": MessageLookupByLibrary.simpleMessage(
             "Passwörter stimmen nicht überein!"),
+        "pay": MessageLookupByLibrary.simpleMessage("Bezahlen"),
         "paymentPageTitle":
             MessageLookupByLibrary.simpleMessage("Zahlungsseite"),
         "paymentSuccessfulMessage": MessageLookupByLibrary.simpleMessage(
@@ -124,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Persönliche Informationen speichern"),
         "savedNotesTitle":
             MessageLookupByLibrary.simpleMessage("Gespeicherte Notizen"),
+        "searchPlaceholder":
+            MessageLookupByLibrary.simpleMessage("Nach Orten suchen ..."),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "signUpButton": MessageLookupByLibrary.simpleMessage("Anmelden"),
