@@ -76,5 +76,11 @@
   "cancel": "Abbrechen",
   "noPlacesFound": "Keine Orte gefunden",
   "pay": "Bezahlen",
-  "searchPlaceholder": "Nach Orten suchen ..."
+  "searchPlaceholder": "Nach Orten suchen ...",
+  "personalInfoUpdated": "Persönliche Informationen aktualisiert!",
+  "fillAllFields": "Bitte füllen Sie alle Felder aus!",
+  "passwordsDoNotMatch": "Passwörter stimmen nicht überein!",
+  "passwordUpdated": "Passwort erfolgreich aktualisiert!",
+  "wrongCurrentPassword": "Das aktuelle Passwort ist falsch.",
+  "error": "Fehler: {error}"
 }

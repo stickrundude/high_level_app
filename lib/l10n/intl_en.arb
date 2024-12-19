@@ -76,5 +76,11 @@
   "cancel": "Cancel",
   "noPlacesFound": "No places found",
   "pay": "Pay",
-  "searchPlaceholder": "Search places ..."
+  "searchPlaceholder": "Search places ...",
+  "personalInfoUpdated": "Personal information updated!",
+  "fillAllFields": "Please fill in all fields!",
+  "passwordsDoNotMatch": "Passwords do not match!",
+  "passwordUpdated": "Password updated successfully!",
+  "wrongCurrentPassword": "The current password is incorrect.",
+  "error": "Error: {error}"
 }

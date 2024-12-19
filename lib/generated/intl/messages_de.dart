@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
-  static String m0(error) => "Anmeldung fehlgeschlagen: ${error}";
+  static String m0(error) => "Fehler: ${error}";
 
-  static String m1(error) => "Fehler bei der Anmeldung: ${error}";
+  static String m1(error) => "Anmeldung fehlgeschlagen: ${error}";
+
+  static String m2(error) => "Fehler bei der Anmeldung: ${error}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -48,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailError": MessageLookupByLibrary.simpleMessage(
             "Bitte geben Sie eine gültige E-Mail-Adresse ein."),
         "emailLabel": MessageLookupByLibrary.simpleMessage("E-Mail"),
+        "error": m0,
         "errorDeletingNoteMessage": MessageLookupByLibrary.simpleMessage(
             "Fehler beim Löschen der Notiz aus Firestore"),
         "expiryDate":
@@ -56,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bild konnte nicht gespeichert werden."),
         "fetchingCityMessage":
             MessageLookupByLibrary.simpleMessage("Stadt wird abgerufen..."),
+        "fillAllFields": MessageLookupByLibrary.simpleMessage(
+            "Bitte füllen Sie alle Felder aus!"),
         "fillEmailPassword": MessageLookupByLibrary.simpleMessage(
             "Bitte geben Sie E-Mail und Passwort ein."),
         "fillOutFieldsToCompletePayment": MessageLookupByLibrary.simpleMessage(
@@ -72,7 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastNameLabel": MessageLookupByLibrary.simpleMessage("Nachname"),
         "loggedInAs": MessageLookupByLibrary.simpleMessage("Eingeloggt als"),
         "login": MessageLookupByLibrary.simpleMessage("Anmelden"),
-        "loginError": m0,
+        "loginError": m1,
         "loginFailed": MessageLookupByLibrary.simpleMessage(
             "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldedaten."),
         "loginSuccess":
@@ -132,7 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "signUp": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "signUpButton": MessageLookupByLibrary.simpleMessage("Anmelden"),
-        "signUpError": m1,
+        "signUpError": m2,
         "signUpFailure": MessageLookupByLibrary.simpleMessage(
             "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."),
         "signUpSuccess": MessageLookupByLibrary.simpleMessage(
@@ -149,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Gespeicherte Notizen anzeigen"),
         "welcomeToTravelMate":
             MessageLookupByLibrary.simpleMessage("Willkommen bei TravelMate"),
+        "wrongCurrentPassword": MessageLookupByLibrary.simpleMessage(
+            "Das aktuelle Passwort ist falsch."),
         "yes": MessageLookupByLibrary.simpleMessage("Ja")
       };
 }

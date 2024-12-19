@@ -79,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
           'email': emailController.text,
         });
 
-        Fluttertoast.showToast(msg: "Personal information updated!");
+        Fluttertoast.showToast(msg: S.of(context).personalInfoUpdated);
       }
     } catch (e) {
       _showError(e.toString());
@@ -87,23 +87,40 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void savePassword() async {
+    if (currentPasswordController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        repeatPasswordController.text.isEmpty) {
+      Fluttertoast.showToast(msg: S.of(context).fillAllFields);
+      return;
+    }
+
     if (passwordController.text != repeatPasswordController.text) {
-      _showError("Passwords do not match!");
+      Fluttertoast.showToast(msg: S.of(context).passwordsDoNotMatch);
       return;
     }
 
     try {
       User? user = FirebaseAuth.instance.currentUser;
+
       if (user != null) {
         await user.reauthenticateWithCredential(
           EmailAuthProvider.credential(
-              email: user.email!, password: currentPasswordController.text),
+            email: user.email!,
+            password: currentPasswordController.text,
+          ),
         );
+
         await user.updatePassword(passwordController.text);
-        Fluttertoast.showToast(msg: "Password updated successfully!");
+        Fluttertoast.showToast(msg: S.of(context).passwordUpdated);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        Fluttertoast.showToast(msg: S.of(context).wrongCurrentPassword);
+      } else {
+        Fluttertoast.showToast(msg: S.of(context).error(e.message ?? ''));
       }
     } catch (e) {
-      _showError(e.toString());
+      Fluttertoast.showToast(msg: S.of(context).error(e.toString()));
     }
   }
 
@@ -238,12 +255,6 @@ class _SettingsPageState extends State<SettingsPage> {
               decoration: InputDecoration(labelText: S.of(context).email),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: currentPasswordController,
-              obscureText: true,
-              decoration:
-                  InputDecoration(labelText: S.of(context).currentPassword),
-            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: savePersonalInfo,

@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(error) => "Login failed: ${error}";
+  static String m0(error) => "Error: ${error}";
 
-  static String m1(error) => "Error during sign up: ${error}";
+  static String m1(error) => "Login failed: ${error}";
+
+  static String m2(error) => "Error during sign up: ${error}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -47,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailError": MessageLookupByLibrary.simpleMessage(
             "Please enter a valid email address."),
         "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+        "error": m0,
         "errorDeletingNoteMessage": MessageLookupByLibrary.simpleMessage(
             "Error deleting note from Firestore"),
         "expiryDate":
@@ -55,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Failed to save picture."),
         "fetchingCityMessage":
             MessageLookupByLibrary.simpleMessage("Fetching city..."),
+        "fillAllFields":
+            MessageLookupByLibrary.simpleMessage("Please fill in all fields!"),
         "fillEmailPassword": MessageLookupByLibrary.simpleMessage(
             "Please enter your email and password."),
         "fillOutFieldsToCompletePayment": MessageLookupByLibrary.simpleMessage(
@@ -71,7 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastNameLabel": MessageLookupByLibrary.simpleMessage("Last Name"),
         "loggedInAs": MessageLookupByLibrary.simpleMessage("Logged in as"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
-        "loginError": m0,
+        "loginError": m1,
         "loginFailed": MessageLookupByLibrary.simpleMessage(
             "Login failed. Please check your credentials."),
         "loginSuccess":
@@ -128,7 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "signUpButton": MessageLookupByLibrary.simpleMessage("Sign Up"),
-        "signUpError": m1,
+        "signUpError": m2,
         "signUpFailure": MessageLookupByLibrary.simpleMessage(
             "Sign up failed. Please try again."),
         "signUpSuccess": MessageLookupByLibrary.simpleMessage(
@@ -145,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("View Saved Notes"),
         "welcomeToTravelMate":
             MessageLookupByLibrary.simpleMessage("Welcome to TravelMate"),
+        "wrongCurrentPassword": MessageLookupByLibrary.simpleMessage(
+            "The current password is incorrect."),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

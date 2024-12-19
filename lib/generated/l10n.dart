@@ -819,6 +819,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Please fill in all fields!`
+  String get fillAllFields {
+    return Intl.message(
+      'Please fill in all fields!',
+      name: 'fillAllFields',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The current password is incorrect.`
+  String get wrongCurrentPassword {
+    return Intl.message(
+      'The current password is incorrect.',
+      name: 'wrongCurrentPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error: {error}`
+  String error(Object error) {
+    return Intl.message(
+      'Error: $error',
+      name: 'error',
+      desc: '',
+      args: [error],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
