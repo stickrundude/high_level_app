@@ -82,5 +82,6 @@
   "passwordsDoNotMatch": "Passwörter stimmen nicht überein!",
   "passwordUpdated": "Passwort erfolgreich aktualisiert!",
   "wrongCurrentPassword": "Das aktuelle Passwort ist falsch.",
-  "error": "Fehler: {error}"
+  "error": "Fehler: {error}",
+  "emailChangeRequiresPassword": "Die Änderung Ihrer E-Mail-Adresse erfordert die Eingabe Ihres aktuellen Passworts."
 }

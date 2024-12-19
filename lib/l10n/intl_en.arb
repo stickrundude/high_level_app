@@ -82,5 +82,6 @@
   "passwordsDoNotMatch": "Passwords do not match!",
   "passwordUpdated": "Password updated successfully!",
   "wrongCurrentPassword": "The current password is incorrect.",
-  "error": "Error: {error}"
+  "error": "Error: {error}",
+  "emailChangeRequiresPassword": "Changing your email requires entering your current password."
 }

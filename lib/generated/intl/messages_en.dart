@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Current Password"),
         "cvv": MessageLookupByLibrary.simpleMessage("CVV"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailChangeRequiresPassword": MessageLookupByLibrary.simpleMessage(
+            "Changing your email requires entering your current password."),
         "emailError": MessageLookupByLibrary.simpleMessage(
             "Please enter a valid email address."),
         "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),

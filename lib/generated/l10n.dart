@@ -849,6 +849,16 @@ class S {
       args: [error],
     );
   }
+
+  /// `Changing your email requires entering your current password.`
+  String get emailChangeRequiresPassword {
+    return Intl.message(
+      'Changing your email requires entering your current password.',
+      name: 'emailChangeRequiresPassword',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

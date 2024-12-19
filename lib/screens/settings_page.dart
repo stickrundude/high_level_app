@@ -27,12 +27,26 @@ class _SettingsPageState extends State<SettingsPage> {
 
   final UserService _userService = UserService();
   String _selectedLanguage = 'en';
+  bool _isEmailChanged = false;
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
     _loadLanguagePreference();
+
+    emailController.addListener(() {
+      setState(() {
+        _isEmailChanged = emailController.text.isNotEmpty &&
+            emailController.text != FirebaseAuth.instance.currentUser?.email;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    emailController.removeListener(() {});
+    super.dispose();
   }
 
   Future<void> _loadUserData() async {
@@ -65,10 +79,12 @@ class _SettingsPageState extends State<SettingsPage> {
       User? user = FirebaseAuth.instance.currentUser;
 
       if (uid != null && user != null) {
-        if (emailController.text != user.email) {
+        if (_isEmailChanged) {
           await user.reauthenticateWithCredential(
             EmailAuthProvider.credential(
-                email: user.email!, password: currentPasswordController.text),
+              email: user.email!,
+              password: currentPasswordController.text,
+            ),
           );
           await user.updateEmail(emailController.text);
         }
@@ -127,8 +143,9 @@ class _SettingsPageState extends State<SettingsPage> {
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          content: Text(message, style: const TextStyle(color: Colors.white)),
-          backgroundColor: Colors.red),
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red,
+      ),
     );
   }
 
@@ -255,6 +272,19 @@ class _SettingsPageState extends State<SettingsPage> {
               decoration: InputDecoration(labelText: S.of(context).email),
             ),
             const SizedBox(height: 10),
+            if (_isEmailChanged) ...[
+              TextField(
+                controller: currentPasswordController,
+                obscureText: true,
+                decoration:
+                    InputDecoration(labelText: S.of(context).currentPassword),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                S.of(context).emailChangeRequiresPassword,
+                style: const TextStyle(color: Colors.red),
+              ),
+            ],
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: savePersonalInfo,
